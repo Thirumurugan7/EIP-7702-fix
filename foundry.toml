@@ -1,0 +1,21 @@
+[profile.default]
+libs = ['lib']
+out = 'out'
+src = 'src'
+solc = "0.8.36"
+auto_detect_solc = false
+via_ir = true
+optimizer = true
+bytecode_hash = "none"
+extra_output = ["storageLayout"]
+# Pinned upstream libraries are maintained separately; retain diagnostics for our sources.
+ignored_warnings_from = ["lib"]
+
+[profile.production]
+optimizer = true
+optimizer_runs = 800
+via_ir = true
+bytecode_hash = "none"
+
+[fmt]
+sort_imports = true

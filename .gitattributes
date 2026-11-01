@@ -1,0 +1,2 @@
+# Preserve the exact bytes of current and historical terms documents.
+config/terms/chainwall-V*.md -text

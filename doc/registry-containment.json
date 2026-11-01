@@ -1,0 +1,3406 @@
+[
+  {
+    "contracts": [
+      "RegistryDiamond",
+      "DiamondCutFacet",
+      "RegistryAccountsFacet",
+      "RegistryAuthFacet",
+      "RegistryCapabilitiesFacet",
+      "RegistryContractsFacet",
+      "RegistryInteractionSyncFacet",
+      "RegistryInteractionsFacet",
+      "RegistryMetadataFacet",
+      "RegistryOrgsFacet",
+      "RegistryPoliciesFacet",
+      "RegistryPolicyStateFacet",
+      "RegistrySyncFacet",
+      "RegistryTermsFacet",
+      "RegistryTimelockFacet",
+      "RegistryTokenCommitsFacet",
+      "RegistryTokensFacet",
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x75b238fc",
+    "signature": "ADMIN_ROLE()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x10ddd8dc",
+    "signature": "CHAINWALL_COMPONENT_ID()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x04e4ffb1",
+    "signature": "CHAINWALL_UPGRADE_PROTOCOL_VERSION()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa217fddf",
+    "signature": "DEFAULT_ADMIN_ROLE()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x3ff06346",
+    "signature": "EXECUTION_MODULE()"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x01e8652c",
+    "signature": "MAX_VALUATION_FEED_AGE()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x51bad0aa",
+    "signature": "PAUSE_MODULE()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond",
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xf72c0d8b",
+    "signature": "UPGRADER_ROLE()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xad3cb1cc",
+    "signature": "UPGRADE_INTERFACE_VERSION()"
+  },
+  {
+    "contracts": [
+      "DiamondCutFacet",
+      "DiamondLoupeFacet",
+      "RegistryAccountsFacet",
+      "RegistryAuthFacet",
+      "RegistryCapabilitiesFacet",
+      "RegistryContractsFacet",
+      "RegistryInteractionSyncFacet",
+      "RegistryInteractionsFacet",
+      "RegistryMetadataFacet",
+      "RegistryOrgsFacet",
+      "RegistryPoliciesFacet",
+      "RegistryPolicyStateFacet",
+      "RegistrySyncFacet",
+      "RegistrySyncQueryFacet",
+      "RegistryTermsFacet",
+      "RegistryTimelockFacet",
+      "RegistryTimelockReleaseFacet",
+      "RegistryTimelockUpgradeFacet",
+      "RegistryTokenCommitsFacet",
+      "RegistryTokensFacet",
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xffa1ad74",
+    "signature": "VERSION()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf5b36e12",
+    "signature": "_migrateSafeSingletonExecute(address,address,address,address,bytes32,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xa6ed50a2",
+    "signature": "_replaceEngineExecute(address,bytes32,address,bytes32,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x0c897c0b",
+    "signature": "_replaceSafeConfiguratorExecute(address,address,bytes32,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x02211c5f",
+    "signature": "_replaceSafeSingletonMigratorExecute(address,address,address,address,bytes32,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xdb4ae738",
+    "signature": "_setAccountImplementationExecute(address,address,bytes32,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x996066af",
+    "signature": "_setAuthAccountImplementationExecute(address,address,bytes32,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xfbed397e",
+    "signature": "_setSafeProxyFactoryExecute(address,address,bytes32,bytes32,address,bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xa11d62cb",
+    "signature": "_setSafeSingletonExecute(address,address,bytes32,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xa4b01359",
+    "signature": "_upgradeAccountFactoryExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xfb67c162",
+    "signature": "_upgradeAuthAccountExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xcf66d4da",
+    "signature": "_upgradeAuthAccountFactoryExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x84e8a8f4",
+    "signature": "_upgradeInteractExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x5060b766",
+    "signature": "_upgradeMiniScriptExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x9ac87e08",
+    "signature": "_upgradeOkAccountExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x2cae8a65",
+    "signature": "_upgradeOkGuardExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x8bbd002d",
+    "signature": "_upgradeOkModuleExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf3877ce6",
+    "signature": "_upgradeRegistryExecute((address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xcbbae8fe",
+    "signature": "_upgradeSafeFactoryExecute(address,(address,bytes32,address,bytes32,bytes32),bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x7e336e6a",
+    "signature": "acceptOrgOwner(string)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x79ba5097",
+    "signature": "acceptOwnership()"
+  },
+  {
+    "contracts": [
+      "RegistryTermsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x90a492e5",
+    "signature": "acceptTerms(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc668b710",
+    "signature": "actionSemanticsGeneration()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe89b0e1e",
+    "signature": "addAccount(address)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x4b46fdf8",
+    "signature": "addContractVersion(string,string,(address,bytes32,address),bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x0fe8c998",
+    "signature": "addContractVersionWithFlags(string,string,(address,bytes32,address),bytes32,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xa99fa3e2",
+    "signature": "addGroupMember(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x74cb1b56",
+    "signature": "addOrgMember(string,address)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x726c1c3c",
+    "signature": "addSafe(address)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x421b2d8b",
+    "signature": "addUser(address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x62d98762",
+    "signature": "approveAction(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryPolicyStateFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xa526cbb8",
+    "signature": "beginPolicyStateExecution(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "cancel",
+    "selector": "0x781cc3d3",
+    "signature": "cancelAction(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "cancel",
+    "selector": "0xcc29d217",
+    "signature": "cancelContractCommit(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "cancel",
+    "selector": "0xd8724ae1",
+    "signature": "cancelInteractionCommit(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTokenCommitsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "cancel",
+    "selector": "0xe50e4efa",
+    "signature": "cancelTokenCommit(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "pure",
+    "policy": "read",
+    "selector": "0xf27c07b3",
+    "signature": "chainwallComponentId()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa6d95317",
+    "signature": "chainwallImplementation()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x2561f1b0",
+    "signature": "chainwallImplementationCodehash()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x758a7549",
+    "signature": "chainwallSecurityBindingsHash()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "pure",
+    "policy": "read",
+    "selector": "0xdf84bc99",
+    "signature": "chainwallUpgradeProtocolVersion()"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x31c5cc86",
+    "signature": "clearPolicyProgram(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x6214bcc4",
+    "signature": "clearScopeOverride(bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x47ec5b5d",
+    "signature": "commitContractPrivate(string,string,bytes32,uint64,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xa9d94db1",
+    "signature": "commitInteractionPrivate(bytes32,bytes32,uint64,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTokenCommitsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xb660ae5c",
+    "signature": "commitTokenPrivate(string,string,bytes32,uint64,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf04e283e",
+    "signature": "completeOwnershipHandover(address)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xaf74f0eb",
+    "signature": "computeInteractionUsdValue(bytes,uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryPolicyStateFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x4671fe19",
+    "signature": "consumePolicyMeter(bytes32,bytes32,uint64,uint256,uint256,bytes32,bytes32,bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x44afbee3",
+    "signature": "contractExists(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x8f12c196",
+    "signature": "createGroup(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x6c0f4544",
+    "signature": "createPolicy(bytes32,bytes32[],uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryPolicyStateFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x2e9a82dc",
+    "signature": "currentPolicyStateExecution()"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe57097c9",
+    "signature": "deleteGroup(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x7b72a97c",
+    "signature": "deleteMeta(string,string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x6c67c8d4",
+    "signature": "deletePolicy(bytes32)"
+  },
+  {
+    "contracts": [
+      "DiamondCutFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x1f931c1c",
+    "signature": "diamondCut((address,uint8,bytes4[])[],address,bytes)"
+  },
+  {
+    "contracts": [
+      "DiamondCutFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x8b3a1847",
+    "signature": "emitInitialDiamondCut()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x3ee75f0c",
+    "signature": "enableIndexing()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x168fefc0",
+    "signature": "enableRoleGovernance()"
+  },
+  {
+    "contracts": [
+      "RegistryPolicyStateFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x8a82709a",
+    "signature": "endPolicyStateExecution()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe125ab9c",
+    "signature": "executeAction(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x69516dab",
+    "signature": "executeActions(bytes32[])"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "cancel",
+    "selector": "0xdc5699d2",
+    "signature": "expireAction(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "cancel",
+    "selector": "0xa1840e69",
+    "signature": "expireContractCommit(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryTokenCommitsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "cancel",
+    "selector": "0x50ea0797",
+    "signature": "expireTokenCommit(string,string)"
+  },
+  {
+    "contracts": [
+      "DiamondLoupeFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xcdffacc6",
+    "signature": "facetAddress(bytes4)"
+  },
+  {
+    "contracts": [
+      "DiamondLoupeFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x52ef6b2c",
+    "signature": "facetAddresses()"
+  },
+  {
+    "contracts": [
+      "DiamondLoupeFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xadfca15e",
+    "signature": "facetFunctionSelectors(address)"
+  },
+  {
+    "contracts": [
+      "DiamondLoupeFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc799ece5",
+    "signature": "facetVersion(address)"
+  },
+  {
+    "contracts": [
+      "DiamondLoupeFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe293bf6c",
+    "signature": "facetVersions()"
+  },
+  {
+    "contracts": [
+      "DiamondLoupeFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x7a0ed627",
+    "signature": "facets()"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe9946616",
+    "signature": "finalizeOwnerBootstrap()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x0df9a711",
+    "signature": "freezeCuts()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xf157c0ac",
+    "signature": "getAccountAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa98e4e77",
+    "signature": "getAccountCount()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x525bcdb6",
+    "signature": "getAccountIndexAlivePage(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x1813462b",
+    "signature": "getAccountIndexCurrentEpoch()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8341635d",
+    "signature": "getAccountIndexEpochPageAt(uint64,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x210a57b8",
+    "signature": "getAccountIndexEpochPageCount(uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x09cbea41",
+    "signature": "getAccountIndexJournal(uint64,uint128)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xbe41be96",
+    "signature": "getAccountIndexNextId()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x1aa770b4",
+    "signature": "getAccountIndexValues(uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x56a053fb",
+    "signature": "getAccountPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xdce9f070",
+    "signature": "getAction(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc6dde13a",
+    "signature": "getActionApprovalState(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xaac64432",
+    "signature": "getActionBundle(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x7c29fae6",
+    "signature": "getActionPayloadWord(bytes32,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x65d5548f",
+    "signature": "getActionSemantics(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8fa626fd",
+    "signature": "getActionSummary(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x200228ad",
+    "signature": "getActionUpgradeCodeHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x4100f7a2",
+    "signature": "getActiveContractImport(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xbf61213d",
+    "signature": "getActiveInteractionImport(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x582d6cda",
+    "signature": "getActiveTokenImport(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x791b6d60",
+    "signature": "getAddress(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x7f5eb9f6",
+    "signature": "getAddressAt(string,string,uint32)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xba4e520b",
+    "signature": "getAddressByHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9d8d8900",
+    "signature": "getAddressByLabel(string,string,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xfa7428de",
+    "signature": "getAddressesByHash(bytes32[])"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x7a0f2317",
+    "signature": "getAuthAccount(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x81bd1f96",
+    "signature": "getAuthCredentialAt(address,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd2449d02",
+    "signature": "getAuthCredentialCount(address)"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9b4735c9",
+    "signature": "getAuthCredentialLink(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xdf9517ff",
+    "signature": "getAuthCredentialPage(address,uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xf367fadb",
+    "signature": "getCapabilityActors(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9669893b",
+    "signature": "getCapabilityGroups(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x379ba0ca",
+    "signature": "getCategoryConfig(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x27d19313",
+    "signature": "getChannels(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x6933a44c",
+    "signature": "getContractByHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe7d953ff",
+    "signature": "getContractByLabel(string,string,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x3bda8b28",
+    "signature": "getContractCommitByKey(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x1b7cda7f",
+    "signature": "getContractCommitKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9399869d",
+    "signature": "getContractCount()"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x0c6cdf21",
+    "signature": "getContractFlags(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe65a331c",
+    "signature": "getContractFlagsByHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xafe5eefa",
+    "signature": "getContractImportHistoryAt(bytes32,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x1e4c603b",
+    "signature": "getContractImportHistoryCount(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x0cb2a577",
+    "signature": "getContractIndexAlivePage(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x67a8b2f3",
+    "signature": "getContractIndexCurrentEpoch()"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd5969eaa",
+    "signature": "getContractIndexEpochPageAt(uint64,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc582485c",
+    "signature": "getContractIndexEpochPageCount(uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd3c74205",
+    "signature": "getContractIndexJournal(uint64,uint128)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9ed8e1f0",
+    "signature": "getContractIndexNextId()"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x823f549b",
+    "signature": "getContractIndexValues(uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xf9758a1c",
+    "signature": "getContractKeyAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc6bc2594",
+    "signature": "getContractKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x425ca3d3",
+    "signature": "getContractMetadata(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xade51eba",
+    "signature": "getContractVersion(string,string,uint32)"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc68f2ada",
+    "signature": "getDoc(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x790bf129",
+    "signature": "getExecutedActionCount()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9bea7148",
+    "signature": "getExecutedActionIds(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe836f318",
+    "signature": "getExecutedActionSummaries(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xb63e1185",
+    "signature": "getExecutionCatalogVersion()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x6733f2f0",
+    "signature": "getExecutionRuntimeVersion()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd7f4e946",
+    "signature": "getExecutionSemanticsRevision()"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x7aba5dc9",
+    "signature": "getFeedMaxAge(address)"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xacda16fd",
+    "signature": "getForeignIds(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x06545a93",
+    "signature": "getGroupCount()"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x795a4172",
+    "signature": "getGroupIndexAlivePage(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9b136bd2",
+    "signature": "getGroupIndexCurrentEpoch()"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9538d2ff",
+    "signature": "getGroupIndexEpochPageAt(uint64,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc4467a4a",
+    "signature": "getGroupIndexEpochPageCount(uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x6c91fcbd",
+    "signature": "getGroupIndexJournal(uint64,uint128)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x50f37c8b",
+    "signature": "getGroupIndexNextId()"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x94dbb85a",
+    "signature": "getGroupIndexValues(uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x6b2b7dd8",
+    "signature": "getGroupInfo(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9ac6897f",
+    "signature": "getGroupKeyAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd30b54c7",
+    "signature": "getGroupKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x6c052cd8",
+    "signature": "getGroupMembers(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x99a2eda0",
+    "signature": "getGroupMembershipRevision(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xae8009d6",
+    "signature": "getImage(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "pure",
+    "policy": "read",
+    "selector": "0x291e1665",
+    "signature": "getIndexEpochRollConfig()"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x4c8e0119",
+    "signature": "getInteractionBindingHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x1fa8eeed",
+    "signature": "getInteractionBundle(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x78b7a923",
+    "signature": "getInteractionBundleHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xfaf5d866",
+    "signature": "getInteractionCommit(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xcbdf309a",
+    "signature": "getInteractionCommitKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x72ef7752",
+    "signature": "getInteractionContentHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa6b1b53e",
+    "signature": "getInteractionCount()"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xcd5685d6",
+    "signature": "getInteractionFlags(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x143fab29",
+    "signature": "getInteractionImportHistoryAt(bytes32,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xff9de317",
+    "signature": "getInteractionImportHistoryCount(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa92d1fc6",
+    "signature": "getInteractionIndexAlivePage(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xb7d58b13",
+    "signature": "getInteractionIndexCurrentEpoch()"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x5dccfc10",
+    "signature": "getInteractionIndexEpochPageAt(uint64,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8410a4a3",
+    "signature": "getInteractionIndexEpochPageCount(uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc865562d",
+    "signature": "getInteractionIndexJournal(uint64,uint128)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x5286cb83",
+    "signature": "getInteractionIndexNextId()"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9404a204",
+    "signature": "getInteractionIndexValues(uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd1035388",
+    "signature": "getInteractionKeyAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd22052ac",
+    "signature": "getInteractionKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x08615d08",
+    "signature": "getInteractionScript(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x0a045359",
+    "signature": "getLinkedArtifact(bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe202cf48",
+    "signature": "getLinkedArtifactBindingHash(bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x03d59e12",
+    "signature": "getLinkedArtifactRelations(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc76eb50c",
+    "signature": "getMaxFeedStaleness()"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x275cdad5",
+    "signature": "getMeta(string,string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x0d78a264",
+    "signature": "getMetaIndexPage(string,string,uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x86fd8385",
+    "signature": "getNativeUsdFeedConfig()"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc7eaaf86",
+    "signature": "getNativeUsdPriceRaw()"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xaa7cedaf",
+    "signature": "getNativeUsdPriceScaled(uint8)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x3bb77715",
+    "signature": "getNativeUsdValue18Ceil(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc7a0ea33",
+    "signature": "getOracleEnvironment()"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x696f541c",
+    "signature": "getOrg(string)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xfee2f129",
+    "signature": "getOrgByHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x23d26253",
+    "signature": "getOrgCount()"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xddc2079f",
+    "signature": "getOrgIndexAlivePage(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xbb1bd6e8",
+    "signature": "getOrgIndexCurrentEpoch()"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x7c1a2272",
+    "signature": "getOrgIndexEpochPageAt(uint64,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x97102393",
+    "signature": "getOrgIndexEpochPageCount(uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x2f211945",
+    "signature": "getOrgIndexJournal(uint64,uint128)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x15a098e2",
+    "signature": "getOrgIndexNextId()"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x806c463a",
+    "signature": "getOrgIndexValues(uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc1c12458",
+    "signature": "getOrgKeyAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa0a721a7",
+    "signature": "getOrgKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x90f81e5b",
+    "signature": "getOrgMembers(string,uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8c51a31b",
+    "signature": "getPendingActionCount()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xba3f5ddf",
+    "signature": "getPendingActionIds(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xdca22dcd",
+    "signature": "getPendingActionSummaries(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x4a38ee9f",
+    "signature": "getPendingOrgOwner(string)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa3f685f9",
+    "signature": "getPolicy(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe59771d2",
+    "signature": "getPolicyCount()"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x2e2804d1",
+    "signature": "getPolicyCriteria(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x02fff9db",
+    "signature": "getPolicyIndexAlivePage(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe4ce5cc3",
+    "signature": "getPolicyIndexCurrentEpoch()"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8e35d39d",
+    "signature": "getPolicyIndexEpochPageAt(uint64,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xaee39cbb",
+    "signature": "getPolicyIndexEpochPageCount(uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa731e2f4",
+    "signature": "getPolicyIndexJournal(uint64,uint128)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x7ff971e8",
+    "signature": "getPolicyIndexNextId()"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x5d85958d",
+    "signature": "getPolicyIndexValues(uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x193fadc6",
+    "signature": "getPolicyKeyAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xfce95e7a",
+    "signature": "getPolicyKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryPolicyStateFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x658f0650",
+    "signature": "getPolicyMeter(bytes32,bytes32,uint64,bytes32,bytes32,bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryPolicyStateFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x38a8643d",
+    "signature": "getPolicyMeterBucket(bytes32,bytes32,uint64,uint256,bytes32,bytes32,bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xf728918a",
+    "signature": "getPolicyProgram(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryPolicyStateFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x04ffd4ca",
+    "signature": "getPolicyUint(bytes32,bytes32,bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x248a9ca3",
+    "signature": "getRoleAdmin(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x567ab96c",
+    "signature": "getSafeAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xbf293cfc",
+    "signature": "getSafeCount()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x6c6dc03d",
+    "signature": "getSafeIndexAlivePage(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x62fc50af",
+    "signature": "getSafeIndexCurrentEpoch()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x0b4532ec",
+    "signature": "getSafeIndexEpochPageAt(uint64,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xccdbf1d6",
+    "signature": "getSafeIndexEpochPageCount(uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x781a1967",
+    "signature": "getSafeIndexJournal(uint64,uint128)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xf7c0ada9",
+    "signature": "getSafeIndexNextId()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8a3ca0b0",
+    "signature": "getSafeIndexValues(uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x7b35c9c4",
+    "signature": "getSafePage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x80001d89",
+    "signature": "getScopeOverride(bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd489e4a9",
+    "signature": "getSyncSourceAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x73b1253c",
+    "signature": "getSyncSourceCount()"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x214b92fb",
+    "signature": "getSyncSourcesPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTermsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x0f8380bf",
+    "signature": "getTermsAcceptance(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTermsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x184ad72b",
+    "signature": "getTermsContext()"
+  },
+  {
+    "contracts": [
+      "RegistryTermsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x70dba0a3",
+    "signature": "getTermsDocument(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xb53be0b8",
+    "signature": "getTimelockPolicyRunner()"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xce5539d2",
+    "signature": "getToken(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xf9de5385",
+    "signature": "getTokenByHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTokenCommitsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x70ecdc65",
+    "signature": "getTokenCommitByKey(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTokenCommitsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x2d0743ba",
+    "signature": "getTokenCommitKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x78a89567",
+    "signature": "getTokenCount()"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xf2593d7d",
+    "signature": "getTokenFlags(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x0c57097b",
+    "signature": "getTokenFlagsByHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x185f7a81",
+    "signature": "getTokenImportHistoryAt(bytes32,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x35828dd7",
+    "signature": "getTokenImportHistoryCount(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xaabf5e55",
+    "signature": "getTokenIndexAlivePage(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe54c3731",
+    "signature": "getTokenIndexCurrentEpoch()"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa6c3c57d",
+    "signature": "getTokenIndexEpochPageAt(uint64,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xb5882b4d",
+    "signature": "getTokenIndexEpochPageCount(uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xcc6e795a",
+    "signature": "getTokenIndexJournal(uint64,uint128)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xeb8fe312",
+    "signature": "getTokenIndexNextId()"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x0275e263",
+    "signature": "getTokenIndexValues(uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x64c8158a",
+    "signature": "getTokenKeyAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x41b46223",
+    "signature": "getTokenKeysPage(uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe7d8c44d",
+    "signature": "getTokenSubmitter(string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x703c376e",
+    "signature": "getTokenUsdPriceRaw(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xaea0e5a1",
+    "signature": "getTokenUsdPriceScaled(bytes32,uint8)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x599faa2a",
+    "signature": "getTokenUsdPriceScaledFresh(bytes32,uint8,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xef0da766",
+    "signature": "getTokenUsdValue18Ceil(bytes32,uint256,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc6e064ad",
+    "signature": "getUserAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xb5cb15f7",
+    "signature": "getUserCount()"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xce533a1e",
+    "signature": "grantCapabilityActor(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe5351b8b",
+    "signature": "grantCapabilityGroup(bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x2f2ff15d",
+    "signature": "grantRole(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTermsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa03632e7",
+    "signature": "hasAcceptedTerms(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x64771cf2",
+    "signature": "hasCapability(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xd8e517d1",
+    "signature": "hasCategoryConfig(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x91d14854",
+    "signature": "hasRole(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xdc9cc17a",
+    "signature": "importContract(address,string,string,uint32,(address,bytes32,address),bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x10cf8756",
+    "signature": "importContractWithFlags(address,string,string,uint32,(address,bytes32,address),bytes32,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionSyncFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x760ac1ef",
+    "signature": "importInteractionBundle(address,bytes32,(bytes32,bytes,uint256,(bytes32,bytes)[]))"
+  },
+  {
+    "contracts": [
+      "RegistrySyncFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf6e2b72f",
+    "signature": "importToken(address,(string,string,string,uint8,address,uint8))"
+  },
+  {
+    "contracts": [
+      "RegistrySyncFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x9333180c",
+    "signature": "importTokenWithFlags(address,(string,string,string,uint8,address,uint8),uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa94f681a",
+    "signature": "indexingEnabled()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc5819fcc",
+    "signature": "indexingStartBlock()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x8129fc1c",
+    "signature": "initialize()"
+  },
+  {
+    "contracts": [
+      "RegistryTermsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xc5eb5036",
+    "signature": "initializeTermsContext()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x58366f45",
+    "signature": "installCoreFacets(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTermsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x3423d807",
+    "signature": "instanceHasAcceptedInitialTerms()"
+  },
+  {
+    "contracts": [
+      "RegistrySyncFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe3a31fa8",
+    "signature": "interactionSyncFacet()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x1fd9a8c6",
+    "signature": "isAccountAllowed(address)"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x35ac9e28",
+    "signature": "isAuthAccountFactoryAllowed(address)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xfd7338fb",
+    "signature": "isGroupMemberByHash(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9b771bf7",
+    "signature": "isOrgCatalogDelegationEnabled()"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xb2f785c1",
+    "signature": "isOrgSuspended(string)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x69bd571c",
+    "signature": "isSafeAllowed(address)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x564fa656",
+    "signature": "isSafeExecutionAuthorityAllowed(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x67da07cd",
+    "signature": "isSyncSourceAllowed(address)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xa6a06dc3",
+    "signature": "isTokenByHash(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x4209fff1",
+    "signature": "isUser(address)"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xc14bf88e",
+    "signature": "linkAuthCredential(bytes32,address,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x9eb2a22e",
+    "signature": "lockCapabilityActors()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x1c297453",
+    "signature": "migrateSafeSingleton(address,address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "nested",
+    "selector": "0xac9650d8",
+    "signature": "multicall(bytes[])"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8da5cb5b",
+    "signature": "owner()"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x58fe673d",
+    "signature": "ownerBootstrapFinalized()"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x9278a8c5",
+    "signature": "ownershipHandoverCompleted()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "pause",
+    "selector": "0x8456cb59",
+    "signature": "pause()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x5c975abb",
+    "signature": "paused()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xe30c3978",
+    "signature": "pendingOwner()"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xda7d2372",
+    "signature": "policyExists(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x8e987b98",
+    "signature": "proposeOrgOwner(string,address)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x52d1902d",
+    "signature": "proxiableUUID()"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xc4740a95",
+    "signature": "removeAccount(address)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xca5a0fae",
+    "signature": "removeFacet(bytes4)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe1b73c84",
+    "signature": "removeGroupMember(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x20db601f",
+    "signature": "removeOrgMember(string,address)"
+  },
+  {
+    "contracts": [
+      "RegistryAccountsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xbaa0f6d8",
+    "signature": "removeSafe(address)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x98575188",
+    "signature": "removeUser(address)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "renounce",
+    "selector": "0x715018a6",
+    "signature": "renounceOwnership()"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "renounce",
+    "selector": "0x36568abe",
+    "signature": "renounceRole(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x5a8ebda2",
+    "signature": "replaceEngine(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x88e07520",
+    "signature": "replaceSafeConfigurator(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x4828b286",
+    "signature": "replaceSafeSingletonMigrator(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xeac0d444",
+    "signature": "revealContractCommit(string,string,(address,bytes32,address),bytes32,bytes32,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x55e2b8f1",
+    "signature": "revealInteractionCommit((bytes32,bytes,uint256,(bytes32,bytes)[]),bytes32[],bytes32,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTokenCommitsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x348da463",
+    "signature": "revealTokenCommit((string,string,string,uint8,address,uint8),uint256,bytes32,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x2e23c8f0",
+    "signature": "revokeAuthCredential(bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x53ed4a38",
+    "signature": "revokeCapabilityActor(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryCapabilitiesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe1dfb6b5",
+    "signature": "revokeCapabilityGroup(bytes32,bytes32)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xd547741f",
+    "signature": "revokeRole(bytes32,address)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xba2ae384",
+    "signature": "roleGovernanceEnabled()"
+  },
+  {
+    "contracts": [
+      "RegistrySyncQueryFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe14227de",
+    "signature": "rollIndexEpochs(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x716ed4a3",
+    "signature": "setAccountImplementation(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryAuthFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xfe49ccfb",
+    "signature": "setAuthAccountFactory(address,bool)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x5250dba8",
+    "signature": "setAuthAccountImplementation(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x54832f6a",
+    "signature": "setCategoryConfig(bytes32,(uint64,uint64,uint64,uint64,bytes32))"
+  },
+  {
+    "contracts": [
+      "RegistryContractsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x67291af1",
+    "signature": "setContractActive(string,string,bool)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xb915554e",
+    "signature": "setFacets(bytes4[],address)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xb022d8fe",
+    "signature": "setFeedMaxAge(address,uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x16862274",
+    "signature": "setImage(string,string,string)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x3cf3c415",
+    "signature": "setInteractionActive(bytes32,bytes32,bool)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xaefe162e",
+    "signature": "setMaxFeedStaleness(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryMetadataFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x84ceda0b",
+    "signature": "setMeta(string,string,string,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe82f167a",
+    "signature": "setNativeUsdFeed(address,uint8)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x447c9f43",
+    "signature": "setOracleEnvironment(bool,address,uint64)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x36f40ebc",
+    "signature": "setOrgCatalogDelegationEnabled(bool)"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x5c3a4493",
+    "signature": "setOrgSuspended(string,bool)"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x37194e15",
+    "signature": "setPolicy(bytes32,bytes32[],uint256[])"
+  },
+  {
+    "contracts": [
+      "RegistryPoliciesFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe60c7136",
+    "signature": "setPolicyProgram(bytes32,bytes,uint32)"
+  },
+  {
+    "contracts": [
+      "RegistryPolicyStateFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x21f1e4cb",
+    "signature": "setPolicyUint(bytes32,bytes32,bytes32,bytes32,uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xc9e78c32",
+    "signature": "setSafeProxyFactory(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockReleaseFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x99f0b1d8",
+    "signature": "setSafeSingleton(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x215b9615",
+    "signature": "setScopeOverride(bytes32,bytes32,(bool,uint64,bool,bytes32,bool,uint64))"
+  },
+  {
+    "contracts": [
+      "RegistrySyncFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x51eed8f5",
+    "signature": "setSyncSourceAllowed(address,bool)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x34cbf075",
+    "signature": "setTimelockPolicyRunner(address)"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xce954e5a",
+    "signature": "setTokenActive(string,string,bool)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x01ffc9a7",
+    "signature": "supportsInterface(bytes4)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf2fde38b",
+    "signature": "transferOwnership(address)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "nonpayable",
+    "policy": "resume",
+    "selector": "0x3f4ba83a",
+    "signature": "unpause()"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf5e0067e",
+    "signature": "upgradeAccountFactory(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe55e9f9d",
+    "signature": "upgradeAuthAccount(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf05b5b4c",
+    "signature": "upgradeAuthAccountFactory(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x678c66da",
+    "signature": "upgradeInteract(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x4ef1aa13",
+    "signature": "upgradeMiniScript(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf84343ae",
+    "signature": "upgradeOkAccount(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xae39f8b3",
+    "signature": "upgradeOkGuard(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x0ac82b79",
+    "signature": "upgradeOkModule(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xf5d471bc",
+    "signature": "upgradeRegistry(address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryTimelockUpgradeFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x4edb58c7",
+    "signature": "upgradeSafeFactory(address,address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryDiamond"
+    ],
+    "mutability": "payable",
+    "policy": "blocked",
+    "selector": "0x4f1ef286",
+    "signature": "upgradeToAndCall(address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryInteractionsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x689d1c66",
+    "signature": "upsertInteractionBundle(bytes32,(bytes32,bytes,uint256,(bytes32,bytes)[]))"
+  },
+  {
+    "contracts": [
+      "RegistryOrgsFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x07202f66",
+    "signature": "upsertOrg(string,address,bool,address[])"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x815d0f2a",
+    "signature": "upsertToken((string,string,string,uint8,address,uint8))"
+  },
+  {
+    "contracts": [
+      "RegistryTokensFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xe06c0fae",
+    "signature": "upsertTokenWithFlags((string,string,string,uint8,address,uint8),uint256)"
+  },
+  {
+    "contracts": [
+      "DiamondCutFacet"
+    ],
+    "mutability": "pure",
+    "policy": "read",
+    "selector": "0x2c182015",
+    "signature": "validateBootstrapSelector(bytes4)"
+  }
+]

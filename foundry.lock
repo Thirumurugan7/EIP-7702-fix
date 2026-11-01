@@ -1,0 +1,8 @@
+{
+  "lib/openzeppelin-contracts-upgradeable": {
+    "rev": "60b305a8f3ff0c7688f02ac470417b6bbf1c4d27"
+  },
+  "lib/safe-contracts": {
+    "rev": "dc437e8fba8b4805d76bcbd1c668c9fd3d1e83be"
+  }
+}
