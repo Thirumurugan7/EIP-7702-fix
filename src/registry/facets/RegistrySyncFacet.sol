@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import {EntityFlags} from "../../EntityFlags.sol";
@@ -100,6 +101,8 @@ contract RegistrySyncFacet is FacetGuard {
     error TokenFeedInvalid();
     /// @notice Thrown when an imported contract version uses the zero target address.
     error ContractAddressZero();
+    /// @notice The imported address (or its implementation) is an EOA carrying an EIP-7702 delegation.
+    error ContractAddressDelegated(address addr);
     /// @notice Thrown when imported token decimals exceed the protocol bound.
     error TokenDecimalsTooHigh(uint8 decimals);
 
@@ -130,7 +133,7 @@ contract RegistrySyncFacet is FacetGuard {
         if (sourceRegistry == address(0)) revert SourceRegistryZero();
         // Disabling is always permitted so a source that self-destructed or lost
         // code cannot remain stuck in the enumerable trust set.
-        if (allowed && sourceRegistry.code.length == 0) revert SourceRegistryNotContract();
+        if (allowed && !Delegation7702.hasContractCode(sourceRegistry)) revert SourceRegistryNotContract();
 
         (bool executing,) = TimelockLib.enforceOrQueue(
             TimelockRequest({
@@ -248,6 +251,10 @@ contract RegistrySyncFacet is FacetGuard {
         _requireAllowedSource(sourceRegistry);
         _verifySourceContract(sourceRegistry, org, id, sourceVersion, expectedData, label, expectedFlags);
 
+        // Imported entries obey the same rule as direct registration: no EIP-7702 delegated EOAs.
+        if (Delegation7702.isDelegated(expectedData.addr) || Delegation7702.isDelegated(expectedData.implementation)) {
+            revert ContractAddressDelegated(expectedData.addr);
+        }
         ContractsStorage.Layout storage cl = ContractsStorage.getLayout();
         uint32 localVersion = ContractsStorage.addVersion(cl, key, expectedData, label);
         DappContract storage contract_ = ContractsStorage.get(cl, key);
@@ -417,7 +424,7 @@ contract RegistrySyncFacet is FacetGuard {
     /// @dev Require a deployed source currently present in the sync allowlist.
     function _requireAllowedSource(address sourceRegistry) private view {
         if (sourceRegistry == address(0)) revert SourceRegistryZero();
-        if (sourceRegistry.code.length == 0) revert SourceRegistryNotContract();
+        if (!Delegation7702.hasContractCode(sourceRegistry)) revert SourceRegistryNotContract();
         if (!SyncStorage.getLayout().isSyncSourceAllowed[sourceRegistry]) {
             revert SourceRegistryNotAllowed(sourceRegistry);
         }
@@ -549,7 +556,7 @@ contract RegistrySyncFacet is FacetGuard {
             if (expectedDecimals != 0) revert TokenFeedInvalid();
             return;
         }
-        if (feed.code.length == 0 || expectedDecimals > 36) {
+        if (feed.code.length <= 23 || expectedDecimals > 36) { // 23 = EIP-7702 designator length
             revert TokenFeedInvalid();
         }
         uint8 decimals = AggregatorV3Interface(feed).decimals();

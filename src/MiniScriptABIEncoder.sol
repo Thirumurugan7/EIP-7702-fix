@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {MiniScriptLimits} from "./MiniScriptLimits.sol";
 
 interface IABIEncoderExecutionHostAnalyzer {
@@ -145,7 +146,7 @@ contract MiniScriptABIEncoder {
         uint256[] calldata tape
     ) external payable returns (bytes6 failure, uint256 workUnits, uint256[] memory returnWords) {
         _requireDelegatecallContext(expectedEngine);
-        if (target.code.length == 0) revert TargetNotContract();
+        if (!Delegation7702.hasContractCode(target)) revert TargetNotContract();
         if (mode > READ_WORDS || (mode != WRITE_VALUE && callValue != 0)) revert InvalidCallMode();
 
         uint256 count = 1;
@@ -809,7 +810,7 @@ contract MiniScriptABIEncoder {
             (address configuredEngine, address registry) = abi.decode(result, (address, address));
             if (
                 expectedEngine != address(0) && configuredEngine == expectedEngine && registry != address(0)
-                    && registry.code.length != 0
+                    && Delegation7702.hasContractCode(registry)
             ) return;
         }
 

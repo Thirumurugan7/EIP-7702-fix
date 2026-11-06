@@ -31,7 +31,7 @@ import {RegistryUsersFacet} from "./facets/RegistryUsersFacet.sol";
 library Selectors {
     /// @notice Return the selector set for `RegistryUsersFacet`.
     function users() internal pure returns (bytes4[] memory sels) {
-        sels = new bytes4[](23);
+        sels = new bytes4[](31);
         uint256 i = 0;
         sels[i++] = RegistryUsersFacet.addUser.selector;
         sels[i++] = RegistryUsersFacet.removeUser.selector;
@@ -56,6 +56,14 @@ library Selectors {
         sels[i++] = RegistryUsersFacet.getGroupIndexJournal.selector;
         sels[i++] = RegistryUsersFacet.isGroupMemberByHash.selector;
         sels[i++] = RegistryUsersFacet.getGroupMembers.selector;
+        sels[i++] = RegistryUsersFacet.allowDelegate.selector;
+        sels[i++] = RegistryUsersFacet.disallowDelegate.selector;
+        sels[i++] = RegistryUsersFacet.isDelegateAllowed.selector;
+        sels[i++] = RegistryUsersFacet.getAllowedDelegateCount.selector;
+        sels[i++] = RegistryUsersFacet.getAllowedDelegateAt.selector;
+        sels[i++] = RegistryUsersFacet.delegateOf.selector;
+        sels[i++] = RegistryUsersFacet.isActorUsable.selector;
+        sels[i++] = RegistryUsersFacet.requireActorUsable.selector;
     }
 
     /// @notice Return the selector set for `RegistryAccountsFacet`.

@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 interface ISafeFactoryMigrationRegistry {
     function INTERACT_CONTRACT() external view returns (address);
     function isSafe(address safe) external view returns (bool);
@@ -49,7 +50,7 @@ contract SafeSingletonMigrator {
     function migrateSafeSingleton(address newSingleton, bytes32 expectedCodehash) external {
         address safe = address(this);
         address safeFactory = SAFE_FACTORY;
-        if (safeFactory.code.length == 0) revert SafeFactoryInvalid(safeFactory);
+        if (!Delegation7702.hasContractCode(safeFactory)) revert SafeFactoryInvalid(safeFactory);
         ISafeFactoryMigrationRegistry factory = ISafeFactoryMigrationRegistry(safeFactory);
         try factory.INTERACT_CONTRACT() returns (address interact) {
             if (interact != INTERACT) revert SafeFactoryInvalid(safeFactory);
@@ -61,7 +62,7 @@ contract SafeSingletonMigrator {
             revert SafeSingletonNotApproved(safeFactory, newSingleton);
         }
         bytes32 actualCodehash = newSingleton.codehash;
-        if (newSingleton.code.length == 0 || actualCodehash != expectedCodehash) {
+        if (!Delegation7702.hasContractCode(newSingleton) || actualCodehash != expectedCodehash) {
             revert SafeSingletonCodehashMismatch(newSingleton, expectedCodehash, actualCodehash);
         }
         address current;

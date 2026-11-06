@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import {ProtocolCodehashes} from "../../ProtocolCodehashes.sol";
@@ -617,7 +618,7 @@ contract RegistryTimelockFacet is FacetGuard {
         if (runner == address(0)) {
             return;
         }
-        if (runner.code.length == 0) revert TimelockPolicyRunnerInvalid(runner);
+        if (!Delegation7702.hasContractCode(runner)) revert TimelockPolicyRunnerInvalid(runner);
         if (!_isTrustedTimelockPolicyRunnerHash(runner.codehash)) {
             revert TimelockPolicyRunnerInvalid(runner);
         }

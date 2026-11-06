@@ -4,6 +4,7 @@ pragma solidity ^0.8.36;
 
 import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
+import {Delegation7702} from "../Delegation7702.sol";
 import {CapabilitiesStorage, GroupsStorage} from "./RegistryShared.sol";
 
 /// @title CapabilityIds
@@ -152,13 +153,19 @@ library CapabilitiesLib {
     }
 
     /// @notice Return whether `actor` currently holds `capability`.
-    /// @dev Direct actors must still have deployed code. This prevents an EOA
-    ///      from inheriting a system-only capability that was intended for a contract.
+    /// @dev Direct actors must still have deployed code of their own. This prevents an EOA
+    ///      from inheriting a system-only capability that was intended for a contract. An EIP-7702
+    ///      designator (exactly 23 bytes) is not contract code, so a direct actor needs more code than
+    ///      that; system actors are proxies and factories, far larger. The length comparison adds no
+    ///      bytecode to the many facets that inline this library.
+    ///      The EIP-7702 actor rule for group-held capabilities is applied where the question is asked:
+    ///      for callers in `ExecutionContextLib.actorOrSender()`, for third parties in
+    ///      `RegistryCapabilitiesFacet.hasCapability`.
     function hasCapability(address actor, bytes32 capability) internal view returns (bool) {
         CapabilitiesStorage.Layout storage L = CapabilitiesStorage.getLayout();
         CapabilitiesStorage.Capability storage cap = CapabilitiesStorage.capability(L, capability);
         if (cap.actors.contains(actor)) {
-            return actor.code.length != 0;
+            return actor.code.length > Delegation7702.DESIGNATOR_LENGTH;
         }
         EnumerableSet.Bytes32Set storage set = cap.groups;
         uint256 len = set.length();
@@ -178,6 +185,6 @@ library CapabilitiesLib {
     function hasDirectActorCapability(address actor, bytes32 capability) internal view returns (bool) {
         CapabilitiesStorage.Layout storage L = CapabilitiesStorage.getLayout();
         CapabilitiesStorage.Capability storage cap = CapabilitiesStorage.capability(L, capability);
-        return cap.actors.contains(actor) && actor.code.length != 0;
+        return cap.actors.contains(actor) && actor.code.length > Delegation7702.DESIGNATOR_LENGTH;
     }
 }

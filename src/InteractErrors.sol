@@ -63,4 +63,10 @@ library InteractErrors {
     /// @dev The simulation path always reverts so it cannot persist PolicyState writes in a real transaction.
     /// @param stackTop Final MiniScript stack top returned by the policy program.
     error PolicyProgramSimulationResult(uint256 stackTop);
+    /// @notice The actor is an EOA carrying an EIP-7702 delegation to a delegate the Registry has not approved.
+    /// @dev Such an account's calls and ERC-1271 answers are produced by the delegate's code, so neither
+    ///      `msg.sender == actor` nor a "valid signature" proves that the key holder acted.
+    /// @param actor Delegated account that tried to act or was named as the actor.
+    /// @param delegate Code the account currently delegates to.
+    error ActorDelegated(address actor, address delegate);
 }

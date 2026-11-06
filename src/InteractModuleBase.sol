@@ -364,6 +364,8 @@ abstract contract InteractModuleBase is InteractStorage {
             structHash := keccak256(ptr, 0xc0)
             mstore(0x40, add(ptr, 0xc0))
         }
+        // ERC-1271 must never be answered by an unapproved EIP-7702 delegate on the actor's behalf.
+        _requireActorUsable(actor);
         if (!SignatureChecker.isValidSignatureNow(actor, _hashTypedDataV4(structHash), signature)) {
             revert InteractErrors.InvalidActorSignature();
         }
@@ -450,6 +452,8 @@ abstract contract InteractModuleBase is InteractStorage {
         }
 
         bytes32 typedHash = _hashTypedDataV4(structHash);
+        // ERC-1271 must never be answered by an unapproved EIP-7702 delegate on the actor's behalf.
+        _requireActorUsable(actor);
         if (!SignatureChecker.isValidSignatureNow(actor, typedHash, signature)) {
             // Execution entrypoints hold the shared nonReentrant guard through this event; failed signature events
             // revert with the call.
@@ -506,6 +510,8 @@ abstract contract InteractModuleBase is InteractStorage {
         }
 
         bytes32 typedHash = _hashTypedDataV4(structHash);
+        // ERC-1271 must never be answered by an unapproved EIP-7702 delegate on the actor's behalf.
+        _requireActorUsable(actor);
         if (!SignatureChecker.isValidSignatureNow(actor, typedHash, signature)) {
             // Execution entrypoints hold the shared nonReentrant guard through this event; failed signature events
             // revert with the call.

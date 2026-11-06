@@ -6,6 +6,7 @@ import {InteractionFlags} from "../../InteractionFlags.sol";
 import {PagedIndex} from "../../PagedIndex.sol";
 import {Interaction, InteractionBundleInput, LinkedArtifact, LinkedArtifactInput} from "../../RegistryTypes.sol";
 import {CapabilitiesLib, CapabilityIds} from "../../registry/Capabilities.sol";
+import {DelegationGuard} from "../../registry/DelegationGuard.sol";
 import {InteractionBundleLib} from "../../registry/InteractionBundleLib.sol";
 import {
     Authority,
@@ -624,6 +625,8 @@ contract RegistryInteractionsFacet is FacetGuard {
             )
         );
         bytes32 ethHash = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", structHash));
+        // A delegated committer's ERC-1271 answer comes from its delegate's code, not from its key.
+        DelegationGuard.requireActorUsable(committer);
         if (!SignatureChecker.isValidSignatureNow(committer, ethHash, actorSignature)) {
             revert RevealSignatureInvalid();
         }

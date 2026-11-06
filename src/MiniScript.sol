@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {IMiniScript} from "@chainwall/interfaces/IMiniScript.sol";
 
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -113,17 +114,17 @@ contract MiniScript is Initializable, ReentrancyGuardUpgradeable, ChainwallUUPSU
 
     function _requireCanonicalEngine(address engine_) private view {
         if (engine_ == address(0)) revert EngineZero();
-        if (engine_.code.length == 0) revert EngineNotContract(engine_);
+        if (!Delegation7702.hasContractCode(engine_)) revert EngineNotContract(engine_);
         if (!ProtocolCodehashes.isAcceptedMiniScriptEngineCodehash(engine_.codehash)) {
             revert EngineNotCanonical(engine_);
         }
         address analyzer_ = address(MiniScriptEngine(engine_).analyzer());
-        if (analyzer_.code.length == 0) revert AnalyzerNotContract(analyzer_);
+        if (!Delegation7702.hasContractCode(analyzer_)) revert AnalyzerNotContract(analyzer_);
         if (!ProtocolCodehashes.isAcceptedMiniScriptAnalyzerCodehash(analyzer_.codehash)) {
             revert AnalyzerNotCanonical(analyzer_);
         }
         address encoder_ = address(MiniScriptEngine(engine_).abiEncoder());
-        if (encoder_.code.length == 0) revert ABIEncoderNotContract(encoder_);
+        if (!Delegation7702.hasContractCode(encoder_)) revert ABIEncoderNotContract(encoder_);
         if (!ProtocolCodehashes.isAcceptedMiniScriptABIEncoderCodehash(encoder_.codehash)) {
             revert ABIEncoderNotCanonical(encoder_);
         }

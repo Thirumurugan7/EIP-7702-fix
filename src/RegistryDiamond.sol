@@ -2,11 +2,14 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {ChainwallUUPSUpgradeable} from "./ChainwallUpgradeable.sol";
 import {EntityFlags} from "./EntityFlags.sol";
 import {ProtocolCodehashes} from "./ProtocolCodehashes.sol";
 import {RegistryPauseModule} from "./RegistryPauseModule.sol";
 import {CapabilitiesLib, CapabilityIds} from "./registry/Capabilities.sol";
+import {DelegationGuard} from "./registry/DelegationGuard.sol";
+import {RegistryRoleStorage} from "./registry/RegistryRoleStorage.sol";
 import {ContractsStorage, ExecutionCatalogStorage} from "./registry/RegistryShared.sol";
 import {ExecutionContextLib} from "./registry/TimelockLib.sol";
 import {TimelockLib, TimelockRequest} from "./registry/TimelockLib.sol";
@@ -135,8 +138,11 @@ contract RegistryDiamond is
         if (previousOwner == newOwner) revert OwnershipHandoverSameOwner(previousOwner);
         if (!hasRole(ADMIN_ROLE, newOwner)) revert HandoverRoleMissing(ADMIN_ROLE, newOwner);
         if (!hasRole(UPGRADER_ROLE, newOwner)) revert HandoverRoleMissing(UPGRADER_ROLE, newOwner);
-        if (hasRole(ADMIN_ROLE, previousOwner)) revert HandoverRoleRetained(ADMIN_ROLE, previousOwner);
-        if (hasRole(UPGRADER_ROLE, previousOwner)) revert HandoverRoleRetained(UPGRADER_ROLE, previousOwner);
+        // "Retained" is about the stored grant: a delegated previous owner must still be revoked first.
+        if (_hasStoredRole(ADMIN_ROLE, previousOwner)) revert HandoverRoleRetained(ADMIN_ROLE, previousOwner);
+        if (_hasStoredRole(UPGRADER_ROLE, previousOwner)) {
+            revert HandoverRoleRetained(UPGRADER_ROLE, previousOwner);
+        }
     }
 
     function _rejectBootstrapCoreSelector(bytes4 selector) private pure {
@@ -267,7 +273,7 @@ contract RegistryDiamond is
     ///      the role-admin timelock category before `_grantRole` mutates state.
     function grantRole(bytes32 role, address account) public override(AccessControlUpgradeable) whenNotPaused {
         if (!_usesRoleGovernance(role)) {
-            bool alreadyGranted = hasRole(role, account);
+            bool alreadyGranted = _hasStoredRole(role, account);
             super.grantRole(role, account);
             if (!alreadyGranted) ExecutionCatalogStorage.bumpSemantics();
             return;
@@ -286,7 +292,7 @@ contract RegistryDiamond is
     ///      the role-admin timelock category before `_revokeRole` mutates state.
     function revokeRole(bytes32 role, address account) public override(AccessControlUpgradeable) whenNotPaused {
         if (!_usesRoleGovernance(role)) {
-            bool wasGranted = hasRole(role, account);
+            bool wasGranted = _hasStoredRole(role, account);
             super.revokeRole(role, account);
             if (wasGranted) ExecutionCatalogStorage.bumpSemantics();
             return;
@@ -319,7 +325,7 @@ contract RegistryDiamond is
         }
         if (facet == address(0)) revert FacetZeroAddress();
         if (facet == address(this)) revert FacetSelfAddress();
-        if (facet.code.length == 0) revert FacetNoCode();
+        if (!Delegation7702.hasContractCode(facet)) revert FacetNoCode();
         for (uint256 i = 0; i < selectors.length;) {
             bytes4 selector = selectors[i];
             // Direct implementation functions always win Solidity dispatch and must never appear in fallback
@@ -383,7 +389,7 @@ contract RegistryDiamond is
         if (!executing) revert BootstrapFacetChangeMustBeImmediate();
         if (cutFacet == address(0) || loupeFacet == address(0)) revert FacetZeroAddress();
         if (cutFacet == address(this) || loupeFacet == address(this)) revert FacetSelfAddress();
-        if (cutFacet.code.length == 0 || loupeFacet.code.length == 0) revert FacetNoCode();
+        if (!Delegation7702.hasContractCode(cutFacet) || !Delegation7702.hasContractCode(loupeFacet)) revert FacetNoCode();
 
         DiamondLoupeStorage.Layout storage loupe = DiamondLoupeStorage.getLayout();
         uint256 existingFacetCount = loupe.facetAddrs.length();
@@ -647,8 +653,8 @@ contract RegistryDiamond is
             abi.encode(
                 getRoleAdmin(ADMIN_ROLE),
                 getRoleAdmin(UPGRADER_ROLE),
-                hasRole(ADMIN_ROLE, currentOwner),
-                hasRole(UPGRADER_ROLE, currentOwner)
+                _hasStoredRole(ADMIN_ROLE, currentOwner),
+                _hasStoredRole(UPGRADER_ROLE, currentOwner)
             )
         );
         bytes32 governorHash = _hashSecurityBindings(
@@ -772,6 +778,33 @@ contract RegistryDiamond is
     }
 
     // Forwarder stubs removed to minimize code size; calls route via fallback using function selectors.
+
+    /// @notice Return whether `account` holds `role` and may exercise it.
+    /// @dev A role is authority held by a key holder. An EOA that carries an EIP-7702 delegation to a
+    ///      delegate this Registry has not approved cannot exercise it, so every consumer of this
+    ///      answer, inside and outside the Registry, sees false until the delegation is cleared or the
+    ///      delegate is approved. The stored grant is untouched; see `_hasStoredRole`.
+    function hasRole(bytes32 role, address account) public view override(AccessControlUpgradeable) returns (bool) {
+        return _hasStoredRole(role, account) && DelegationGuard.isActorUsable(account);
+    }
+
+    /// @dev The stored grant, independent of the EIP-7702 actor rule. Grant and revoke bookkeeping must
+    ///      use this, otherwise the role of a currently delegated holder could never be revoked.
+    function _hasStoredRole(bytes32 role, address account) internal view returns (bool) {
+        return RegistryRoleStorage.state().roles[role].hasRole[account];
+    }
+
+    /// @dev Same effect and event as OpenZeppelin's `_grantRole`, decided on the stored grant.
+    function _grantRole(bytes32 role, address account) internal override returns (bool granted) {
+        granted = RegistryRoleStorage.grantRole(role, account);
+        if (granted) emit RoleGranted(role, account, _msgSender());
+    }
+
+    /// @dev Same effect and event as OpenZeppelin's `_revokeRole`, decided on the stored grant.
+    function _revokeRole(bytes32 role, address account) internal override returns (bool revoked) {
+        revoked = RegistryRoleStorage.revokeRole(role, account);
+        if (revoked) emit RoleRevoked(role, account, _msgSender());
+    }
 
     /// @dev Override OZ Context to honor timelock execution context.
     function _msgSender() internal view override(ContextUpgradeable) returns (address) {

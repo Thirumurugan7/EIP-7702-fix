@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {TermsDocument, TermsDocumentLib} from "./registry/Terms.sol";
 import {IChainwallRegistry} from "@chainwall/interfaces/IChainwallRegistry.sol";
 
@@ -49,7 +50,7 @@ contract TermsRegistry {
     function transferToChainwall(IChainwallRegistry registry_, address controller) external onlyOwner {
         if (address(registry) != address(0)) revert ChainwallAlreadyConfigured();
         if (
-            address(registry_).code.length == 0 || controller.code.length == 0
+            !Delegation7702.hasContractCode(address(registry_)) || !Delegation7702.hasContractCode(controller)
                 || !registry_.isAccountAllowed(controller) || registry_.paused()
         ) revert InvalidController();
         address previousOwner = owner;

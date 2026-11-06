@@ -3,7 +3,9 @@
 pragma solidity ^0.8.36;
 
 import {PagedIndex} from "../../PagedIndex.sol";
+import {Delegation7702} from "../../Delegation7702.sol";
 import {CapabilitiesLib, CapabilityIds} from "../../registry/Capabilities.sol";
+import {DelegateAllowlistStorage, DelegationRules} from "../../registry/DelegationGuard.sol";
 import {CapabilitiesStorage, GroupsStorage, PoliciesStorage, UserAddrsStorage} from "../../registry/RegistryShared.sol";
 import {TimelockLib, TimelockRequest} from "../../registry/TimelockLib.sol";
 import {FacetGuard} from "../diamond/DiamondGuards.sol";
@@ -62,6 +64,16 @@ contract RegistryUsersFacet is FacetGuard {
     event ActionBundled(bytes32 indexed rootActionId, bytes32 indexed actionId);
     event ActionRequirement(bytes32 indexed rootActionId, bytes32 indexed category, bytes32 indexed scope);
 
+    /// @notice Emitted when an EIP-7702 delegate is approved for use behind this Registry's actors.
+    event DelegateAllowed(address indexed delegate, bytes32 codehash);
+    /// @notice Emitted when an EIP-7702 delegate approval is removed.
+    event DelegateDisallowed(address indexed delegate);
+
+    error DelegateZero();
+    error DelegateNotContract(address delegate);
+    error DelegateAlreadyAllowed(address delegate);
+    error DelegateNotAllowed(address delegate);
+
     function _enforceMembership(
         bytes32 category,
         bytes32 scope,
@@ -89,6 +101,7 @@ contract RegistryUsersFacet is FacetGuard {
     function addUser(address user) external whenNotPausedD nonReentrantD {
         _requireUserWriteRole();
         if (user == address(0)) revert("user=0");
+        DelegationRules.requireActorUsable(user);
         bytes32 scope = bytes32(uint256(uint160(user)));
         UserAddrsStorage.Layout storage ua = UserAddrsStorage.getLayout();
         if (UserAddrsStorage.contains(ua, user)) revert UserExists();
@@ -162,7 +175,9 @@ contract RegistryUsersFacet is FacetGuard {
     /// @return True if allowlisted.
     function isUser(address user) external view returns (bool) {
         UserAddrsStorage.Layout storage ua = UserAddrsStorage.getLayout();
-        return UserAddrsStorage.contains(ua, user);
+        // An allowlisted EOA that carries an unapproved EIP-7702 delegation is not a usable actor:
+        // its calls and ERC-1271 answers come from the delegate's code, not from the key holder.
+        return UserAddrsStorage.contains(ua, user) && DelegationRules.isActorUsable(user);
     }
 
     /// @notice Returns the number of allowlisted users.
@@ -261,6 +276,7 @@ contract RegistryUsersFacet is FacetGuard {
         if (!GroupsStorage.exists(gl, groupHash)) revert GroupNotFound();
         UserAddrsStorage.Layout storage ua = UserAddrsStorage.getLayout();
         if (!UserAddrsStorage.contains(ua, user)) revert UserMissing();
+        DelegationRules.requireActorUsable(user);
         if (GroupsStorage.isMember(gl, groupHash, user)) revert AlreadyMember();
         if (GroupsStorage.memberGroupCount(gl, user) >= MAX_GROUPS_PER_USER) {
             revert TooManyGroupMemberships(user);
@@ -281,6 +297,7 @@ contract RegistryUsersFacet is FacetGuard {
 
         if (!GroupsStorage.exists(gl, groupHash)) revert GroupNotFound();
         if (!UserAddrsStorage.contains(ua, user)) revert UserMissing();
+        DelegationRules.requireActorUsable(user);
         if (GroupsStorage.isMember(gl, groupHash, user)) revert AlreadyMember();
         if (GroupsStorage.memberGroupCount(gl, user) >= MAX_GROUPS_PER_USER) {
             revert TooManyGroupMemberships(user);
@@ -392,7 +409,10 @@ contract RegistryUsersFacet is FacetGuard {
     function isGroupMemberByHash(bytes32 groupHash, address user) external view returns (bool) {
         GroupsStorage.Layout storage gl = GroupsStorage.getLayout();
         if (!GroupsStorage.exists(gl, groupHash)) return false;
-        return GroupsStorage.isMember(gl, groupHash, user);
+        // Membership confers approval and capability authority, so it follows the same EIP-7702 rule
+        // as `isUser`. Consumers re-read this at execution, which also drops stored approvals from
+        // members who delegated after approving.
+        return GroupsStorage.isMember(gl, groupHash, user) && DelegationRules.isActorUsable(user);
     }
 
     /// @notice Returns all group members. For large groups prefer paging in client.
@@ -409,7 +429,110 @@ contract RegistryUsersFacet is FacetGuard {
         }
     }
 
+    // ------------------------------------------------------------------------------------------
+    // EIP-7702 delegate allowlist
+    // ------------------------------------------------------------------------------------------
+
+    /// @notice Approve `delegate` as EIP-7702 code that this Registry's actors may delegate to.
+    /// @dev Admin only and routed through the delegate timelock category. The delegate must be a
+    ///      contract with its own code; its runtime codehash is pinned.
+    function allowDelegate(address delegate) external whenNotPausedD nonReentrantD {
+        _requireDelegateWriteRole();
+        if (delegate == address(0)) revert DelegateZero();
+        if (!Delegation7702.hasContractCode(delegate)) revert DelegateNotContract(delegate);
+        DelegateAllowlistStorage.Layout storage dl = DelegateAllowlistStorage.getLayout();
+        if (dl.delegates.contains(delegate)) revert DelegateAlreadyAllowed(delegate);
+
+        (bool executing,) = TimelockLib.enforceOrQueue(
+            TimelockRequest({
+                category: TimelockLib.categoryDelegate(),
+                scope: bytes32(uint256(uint160(delegate))),
+                policyId: bytes32(0),
+                delay: 0,
+                gracePeriod: 0
+            }),
+            abi.encodeWithSelector(this.allowDelegate.selector, delegate)
+        );
+        if (!executing) {
+            return;
+        }
+
+        if (!Delegation7702.hasContractCode(delegate)) revert DelegateNotContract(delegate);
+        if (!dl.delegates.add(delegate)) revert DelegateAlreadyAllowed(delegate);
+        bytes32 codehash = delegate.codehash;
+        dl.codehashOf[delegate] = codehash;
+        // Delegate entrypoints hold nonReentrantD; the allowlist is local Registry storage.
+        // forge-lint: disable-next-line(reentrancy-events)
+        emit DelegateAllowed(delegate, codehash);
+    }
+
+    /// @notice Remove the approval of an EIP-7702 delegate.
+    function disallowDelegate(address delegate) external whenNotPausedD nonReentrantD {
+        _requireDelegateWriteRole();
+        DelegateAllowlistStorage.Layout storage dl = DelegateAllowlistStorage.getLayout();
+        if (!dl.delegates.contains(delegate)) revert DelegateNotAllowed(delegate);
+
+        (bool executing,) = TimelockLib.enforceOrQueue(
+            TimelockRequest({
+                category: TimelockLib.categoryDelegate(),
+                scope: bytes32(uint256(uint160(delegate))),
+                policyId: bytes32(0),
+                delay: 0,
+                gracePeriod: 0
+            }),
+            abi.encodeWithSelector(this.disallowDelegate.selector, delegate)
+        );
+        if (!executing) {
+            return;
+        }
+
+        if (!dl.delegates.remove(delegate)) revert DelegateNotAllowed(delegate);
+        delete dl.codehashOf[delegate];
+        // Delegate entrypoints hold nonReentrantD; the allowlist is local Registry storage.
+        // forge-lint: disable-next-line(reentrancy-events)
+        emit DelegateDisallowed(delegate);
+    }
+
+    /// @notice Return whether `delegate` is approved and still has the approved code.
+    function isDelegateAllowed(address delegate) external view returns (bool) {
+        return DelegationRules.isDelegateAllowed(delegate);
+    }
+
+    /// @notice Return the number of approved delegates, including any whose code has since changed.
+    function getAllowedDelegateCount() external view returns (uint256) {
+        return DelegateAllowlistStorage.getLayout().delegates.length();
+    }
+
+    /// @notice Return the approved delegate at `index` and its pinned codehash.
+    function getAllowedDelegateAt(uint256 index) external view returns (address delegate, bytes32 codehash) {
+        DelegateAllowlistStorage.Layout storage dl = DelegateAllowlistStorage.getLayout();
+        delegate = dl.delegates.at(index);
+        codehash = dl.codehashOf[delegate];
+    }
+
+    /// @notice Return the EIP-7702 delegate of `account`, or zero when it carries no delegation.
+    function delegateOf(address account) external view returns (address) {
+        return Delegation7702.delegateOf(account);
+    }
+
+    /// @notice Return whether `actor` may hold or exercise authority under this Registry.
+    /// @dev False only for an EOA delegated to a delegate that is not approved.
+    function isActorUsable(address actor) external view returns (bool) {
+        return DelegationRules.isActorUsable(actor);
+    }
+
+    /// @notice Revert with `ActorDelegated(actor, delegate)` unless `actor` may hold or exercise authority.
+    /// @dev The Registry's own components call this through {DelegationGuard} for 23-byte accounts.
+    function requireActorUsable(address actor) external view {
+        DelegationRules.requireActorUsable(actor);
+    }
+
     // Helpers
+    function _requireDelegateWriteRole() private view {
+        address actor = _msgSenderD();
+        if (!_isAdmin(actor)) revert AccessControlUnauthorizedAccount(actor, ADMIN_ROLE);
+    }
+
     function _requireUserWriteRole() private view {
         address actor = _msgSenderD();
         if (_canManageUsers(actor)) {

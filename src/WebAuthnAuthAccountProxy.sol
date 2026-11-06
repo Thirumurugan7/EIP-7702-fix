@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {ERC1967Utils} from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Utils.sol";
 
 import {ChainwallUpgradeHash} from "./ChainwallUpgradeable.sol";
@@ -100,14 +101,14 @@ contract WebAuthnAuthAccountProxy {
     function initializeProxy(address expectedImplementation, bytes32 expectedImplementationCodehash) external {
         if (WebAuthnAuthAccountProxyStorage.factory() != address(0)) revert ProxyAlreadyInitialized();
         address factory_ = msg.sender;
-        if (factory_.code.length == 0) revert FactoryInvalid(factory_);
+        if (!Delegation7702.hasContractCode(factory_)) revert FactoryInvalid(factory_);
         address implementation = IWebAuthnAuthAccountProxyFactory(factory_).IMPLEMENTATION();
         if (implementation != expectedImplementation || implementation.codehash != expectedImplementationCodehash) {
             revert ImplementationInvalid(expectedImplementation);
         }
         _requireAccountImplementation(implementation);
         address registry = IWebAuthnAuthAccountProxyFactory(factory_).REGISTRY();
-        if (registry == address(0) || registry.code.length == 0) revert FactoryInvalid(factory_);
+        if (registry == address(0) || !Delegation7702.hasContractCode(registry)) revert FactoryInvalid(factory_);
 
         bytes32 factorySlot = WebAuthnAuthAccountProxyStorage.FACTORY_SLOT;
         assembly ("memory-safe") {
@@ -205,7 +206,7 @@ contract WebAuthnAuthAccountProxy {
     }
 
     function _requireAccountImplementation(address implementation) private view {
-        if (implementation.code.length == 0) revert ImplementationInvalid(implementation);
+        if (!Delegation7702.hasContractCode(implementation)) revert ImplementationInvalid(implementation);
         bytes32 componentId;
         try IWebAuthnAuthAccountImplementation(implementation).chainwallComponentId() returns (bytes32 value) {
             componentId = value;

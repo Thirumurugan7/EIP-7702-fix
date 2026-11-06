@@ -7,6 +7,8 @@ import {IAccessRegistry} from "@chainwall/interfaces/IAccessRegistry.sol";
 import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 
+import {Delegation7702} from "./Delegation7702.sol";
+import {InteractErrors} from "./InteractErrors.sol";
 import {CapabilityIds} from "./registry/Capabilities.sol";
 
 // Security note: `_checkThresholds` intentionally reads current criteria, but it
@@ -88,7 +90,20 @@ abstract contract AccessControlPolicy is ReentrancyGuardUpgradeable {
 
     function _onlyUser() internal view {
         address actor = _policyActor();
+        _requireActorUsable(actor);
         require(_registry.isUser(actor), "AccessControlPolicy: caller is not a user");
+    }
+
+    /// @notice Revert when `actor` is an EOA delegated (EIP-7702) to a delegate the Registry has not approved.
+    /// @dev Applied to every resolved or claimed policy actor before any other check. The Registry's
+    ///      `isUser`, `isGroupMemberByHash` and `hasCapability` answers apply the same rule, so stored
+    ///      approvals from members who delegate later stop counting when thresholds are re-read.
+    ///      Accounts without a delegation cost one EXTCODESIZE and no external call.
+    function _requireActorUsable(address actor) internal view {
+        address delegate = Delegation7702.delegateOf(actor);
+        if (delegate != address(0) && !_registry.isActorUsable(actor)) {
+            revert InteractErrors.ActorDelegated(actor, delegate);
+        }
     }
 
     /// @notice Resolve the logical actor for access-control checks.
@@ -166,6 +181,7 @@ abstract contract AccessControlPolicy is ReentrancyGuardUpgradeable {
         require(store.operations[operationId].submitter != address(0), "AccessControlPolicy: operation does not exist");
         Operation storage operation = store.operations[operationId];
         address actor = _policyActor();
+        _requireActorUsable(actor);
         require(
             actor == operation.submitter || _registry.hasCapability(CapabilityIds.CANCEL_OPERATION, actor),
             "AccessControlPolicy: not authorized"

@@ -150,6 +150,12 @@ interface IRegistryPrice {
 ///      - the registry resolves token metadata and Chainlink feeds
 ///      - the result can then be used to enforce value-based approval or budget rules
 abstract contract PriceModule {
+    /// @dev Size of an EIP-7702 delegation designator (`0xef0100 || delegate`). A price feed must have
+    ///      more code than that: a delegated EOA is an account whose behavior its key holder can replace
+    ///      with one signature, not an oracle. Comparing the length costs no extra bytecode, which matters
+    ///      for the facets that inherit this module and sit close to the EIP-170 size limit.
+    uint256 private constant _DESIGNATOR_LENGTH = 23;
+
     // --- Native token price feed configuration ---
     /// @notice Emitted when governance binds a native USD feed and decimal count.
     /// @param feed New Chainlink-compatible feed, or zero to clear configuration.
@@ -240,7 +246,7 @@ abstract contract PriceModule {
     ///      mandatory even when the caller supplies a stricter `maxAge`.
     function setFeedMaxAge(address feed, uint64 maxAge) external {
         _requirePriceAdmin();
-        if (feed == address(0) || (maxAge != 0 && feed.code.length == 0)) {
+        if (feed == address(0) || (maxAge != 0 && feed.code.length <= _DESIGNATOR_LENGTH)) {
             revert FeedConfigurationInvalid(feed);
         }
         bytes32 scope = keccak256(abi.encode(_FEED_MAX_AGE_SCOPE_PREFIX, feed));
@@ -278,7 +284,7 @@ abstract contract PriceModule {
     {
         _requirePriceAdmin();
         if (sequencerRequired
-                ? sequencerUptimeFeed == address(0) || sequencerUptimeFeed.code.length == 0 || recoveryGracePeriod == 0
+                ? sequencerUptimeFeed == address(0) || sequencerUptimeFeed.code.length <= _DESIGNATOR_LENGTH || recoveryGracePeriod == 0
                 : sequencerUptimeFeed != address(0) || recoveryGracePeriod != 0) {
             revert OracleEnvironmentInvalid();
         }
@@ -409,7 +415,7 @@ abstract contract PriceModule {
         // Aggregate valuation must reject any invalid component or oracle round; skipping one would understate
         // value.
         // forge-lint: disable-next-line(require-revert-in-loop)
-        if (feed.code.length == 0 || expectedDecimals > MAX_PRICE_DECIMALS) revert InvalidFeedConfiguration();
+        if (feed.code.length <= _DESIGNATOR_LENGTH || expectedDecimals > MAX_PRICE_DECIMALS) revert InvalidFeedConfiguration();
         _checkOracleEnvironment();
         uint64 feedMaxAge = OracleSafetyStorage.getLayout().feedMaxAge[feed];
         // Aggregate valuation must reject any invalid component or oracle round; skipping one would understate
@@ -487,7 +493,7 @@ abstract contract PriceModule {
             if (expectedDecimals != 0) revert InvalidFeedConfiguration();
             return;
         }
-        if (feed.code.length == 0 || expectedDecimals > MAX_PRICE_DECIMALS) revert InvalidFeedConfiguration();
+        if (feed.code.length <= _DESIGNATOR_LENGTH || expectedDecimals > MAX_PRICE_DECIMALS) revert InvalidFeedConfiguration();
         uint8 actual = AggregatorV3Interface(feed).decimals();
         if (actual > MAX_PRICE_DECIMALS) revert InvalidFeedConfiguration();
         if (actual != expectedDecimals) revert FeedDecimalsMismatch(expectedDecimals, actual);

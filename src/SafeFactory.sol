@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import {Safe} from "@gnosis.pm/safe-contracts/Safe.sol";
@@ -374,7 +375,7 @@ contract SafeFactoryWithCreate2 is ReentrancyGuard, ChainwallUUPSUpgradeable {
         bool indexingEnabled,
         SafeComponentsFactory _componentFactory
     ) {
-        if (address(_componentFactory).code.length == 0) {
+        if (!Delegation7702.hasContractCode(address(_componentFactory))) {
             revert SafeInfrastructureInvalid(address(_componentFactory));
         }
         COMPONENT_FACTORY = address(_componentFactory);
@@ -393,8 +394,8 @@ contract SafeFactoryWithCreate2 is ReentrancyGuard, ChainwallUUPSUpgradeable {
         public
         initializer
     {
-        if (_safeSingleton.code.length == 0) revert SafeInfrastructureInvalid(_safeSingleton);
-        if (_proxyFactory.code.length == 0) revert SafeInfrastructureInvalid(_proxyFactory);
+        if (!Delegation7702.hasContractCode(_safeSingleton)) revert SafeInfrastructureInvalid(_safeSingleton);
+        if (!Delegation7702.hasContractCode(_proxyFactory)) revert SafeInfrastructureInvalid(_proxyFactory);
         SAFE_SINGLETON = _safeSingleton;
         PROXY_FACTORY = SafeProxyFactory(_proxyFactory);
         bytes memory proxyCreationCode = _proxyCreationCodeUnchecked(_proxyFactory);
@@ -513,7 +514,7 @@ contract SafeFactoryWithCreate2 is ReentrancyGuard, ChainwallUUPSUpgradeable {
     ///      bytecode hash. Earlier proxy runtimes remain approved for provenance.
     function setChainwallSafeProxyFactory(address newProxyFactory, bytes32 expectedCreationCodehash) external {
         if (msg.sender != address(INTERACT_CONTRACT.registry())) revert OnlyRegistry();
-        if (newProxyFactory.code.length == 0) revert SafeInfrastructureInvalid(newProxyFactory);
+        if (!Delegation7702.hasContractCode(newProxyFactory)) revert SafeInfrastructureInvalid(newProxyFactory);
         bytes memory creationCode = _proxyCreationCodeUnchecked(newProxyFactory);
         bytes32 creationCodehash = keccak256(creationCode);
         if (creationCodehash != expectedCreationCodehash) {
@@ -1237,7 +1238,7 @@ contract SafeFactoryWithCreate2 is ReentrancyGuard, ChainwallUUPSUpgradeable {
     }
 
     function _requireSafeSingleton(address singleton) private view returns (bytes32 codehash_, bytes32 versionHash) {
-        if (singleton.code.length == 0) revert SafeInfrastructureInvalid(singleton);
+        if (!Delegation7702.hasContractCode(singleton)) revert SafeInfrastructureInvalid(singleton);
         codehash_ = singleton.codehash;
         try Safe(payable(singleton)).VERSION() returns (string memory version) {
             versionHash = keccak256(bytes(version));
@@ -1250,7 +1251,7 @@ contract SafeFactoryWithCreate2 is ReentrancyGuard, ChainwallUUPSUpgradeable {
     }
 
     function _requireSafeSingletonMigrator(address migrator) private view {
-        if (migrator.code.length == 0) revert SafeSingletonMigratorInvalid(migrator);
+        if (!Delegation7702.hasContractCode(migrator)) revert SafeSingletonMigratorInvalid(migrator);
         try SafeSingletonMigrator(migrator).chainwallComponentId() returns (bytes32 componentId) {
             if (componentId != SAFE_SINGLETON_MIGRATOR_COMPONENT_ID) revert SafeSingletonMigratorInvalid(migrator);
         } catch {
@@ -1269,7 +1270,7 @@ contract SafeFactoryWithCreate2 is ReentrancyGuard, ChainwallUUPSUpgradeable {
     }
 
     function _requireConfigurator(address configurator) private view {
-        if (configurator.code.length == 0) revert SafeConfiguratorInvalid(configurator);
+        if (!Delegation7702.hasContractCode(configurator)) revert SafeConfiguratorInvalid(configurator);
         try SafeConfigurator(configurator).chainwallComponentId() returns (bytes32 componentId) {
             if (componentId != SAFE_CONFIGURATOR_COMPONENT_ID) revert SafeConfiguratorInvalid(configurator);
         } catch {

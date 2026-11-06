@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {ChainwallInitialImplementationValidation} from "./ChainwallUpgradeable.sol";
 import {ProtocolCodehashes} from "./ProtocolCodehashes.sol";
 import {RegistryDiamond} from "./RegistryDiamond.sol";
@@ -166,7 +167,7 @@ contract OKFactoryConfig {
         require(safeSingleton != address(0), "config:safeSingleton=0");
         require(safeProxyFactory != address(0), "config:safeProxyFactory=0");
         require(safeFactoryImpl != address(0), "config:safeFactoryImpl=0");
-        require(safeFactoryImpl.code.length != 0, "config:safeFactoryImpl !contract");
+        require(Delegation7702.hasContractCode(safeFactoryImpl), "config:safeFactoryImpl !contract");
         require(facets.users != address(0), "config:usersFacet=0");
         require(facets.accounts != address(0), "config:accountsFacet=0");
         require(facets.orgs != address(0), "config:orgsFacet=0");
@@ -191,16 +192,16 @@ contract OKFactoryConfig {
         require(miniScriptImpl != address(0), "config:miniScriptImpl=0");
         require(interactImpl != address(0), "config:interactImpl=0");
         require(accountEngine != address(0), "config:accountEngine=0");
-        require(accountEngine.code.length != 0, "config:accountEngine !contract");
+        require(Delegation7702.hasContractCode(accountEngine), "config:accountEngine !contract");
         require(ProtocolCodehashes.isAcceptedMiniScriptDeployment(accountEngine), "config:accountEngine !canon");
         require(accountFactoryImpl != address(0), "config:accountFactoryImpl=0");
         require(okAccountImpl != address(0), "config:okAccountImpl=0");
-        require(okAccountImpl.code.length != 0, "config:okAccountImpl !contract");
+        require(Delegation7702.hasContractCode(okAccountImpl), "config:okAccountImpl !contract");
         require(predictor != address(0), "config:predictor=0");
         require(webAuthn.factoryImpl != address(0), "config:webAuthnFactoryImpl=0");
-        require(webAuthn.factoryImpl.code.length != 0, "config:webAuthnFactoryImpl !contract");
+        require(Delegation7702.hasContractCode(webAuthn.factoryImpl), "config:webAuthnFactoryImpl !contract");
         require(webAuthn.accountImpl != address(0), "config:webAuthnAccountImpl=0");
-        require(webAuthn.accountImpl.code.length != 0, "config:webAuthnAccountImpl !contract");
+        require(Delegation7702.hasContractCode(webAuthn.accountImpl), "config:webAuthnAccountImpl !contract");
         require(webAuthn.entryPoint != address(0), "config:webAuthnEntryPoint=0");
         WebAuthnEntryPoint.requireCanonical(webAuthn.entryPoint);
         require(webAuthn.rpIdHash != bytes32(0), "config:webAuthnRpIdHash=0");

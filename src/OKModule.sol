@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {Safe} from "@gnosis.pm/safe-contracts/Safe.sol";
 import {Enum} from "@gnosis.pm/safe-contracts/libraries/Enum.sol";
 import {IProxy} from "@gnosis.pm/safe-contracts/proxies/SafeProxy.sol";
@@ -160,7 +161,7 @@ contract OKModule is ReentrancyGuard, ChainwallUUPSUpgradeable {
 
     function _requireSafeSingletonMigrator(Interact interact, SafeSingletonMigrator migrator) private view {
         address migratorAddress = address(migrator);
-        if (migratorAddress.code.length == 0) revert ModuleSafeSingletonMigratorInvalid(migratorAddress);
+        if (!Delegation7702.hasContractCode(migratorAddress)) revert ModuleSafeSingletonMigratorInvalid(migratorAddress);
         try migrator.chainwallComponentId() returns (bytes32 componentId) {
             if (componentId != SAFE_SINGLETON_MIGRATOR_COMPONENT_ID) {
                 revert ModuleSafeSingletonMigratorInvalid(migratorAddress);
@@ -197,7 +198,7 @@ contract OKModule is ReentrancyGuard, ChainwallUUPSUpgradeable {
         }
         Safe targetSafe = _checkedSafe(safe);
         bytes32 actualCodehash = newSingleton.codehash;
-        if (newSingleton.code.length == 0 || actualCodehash != expectedCodehash) {
+        if (!Delegation7702.hasContractCode(newSingleton) || actualCodehash != expectedCodehash) {
             revert ModuleSafeSingletonInvalid(newSingleton, expectedCodehash, actualCodehash);
         }
         address previousSingleton = IProxy(safe).masterCopy();

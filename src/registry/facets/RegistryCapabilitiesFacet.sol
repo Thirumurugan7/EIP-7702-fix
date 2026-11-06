@@ -2,7 +2,9 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {CapabilitiesLib, CapabilityIds} from "../../registry/Capabilities.sol";
+import {DelegationGuard} from "../../registry/DelegationGuard.sol";
 import {KeccakHelpers as KH} from "../../registry/Hashing.sol";
 import {CapabilitiesStorage, GroupsStorage} from "../../registry/RegistryShared.sol";
 import {ExecutionContextLib, TimelockLib, TimelockRequest} from "../../registry/TimelockLib.sol";
@@ -88,7 +90,7 @@ contract RegistryCapabilitiesFacet is FacetGuard {
         _requireSystemCapability(capability);
         if (CapabilitiesStorage.getLayout().actorGrantsLocked) revert CapabilityErrors.ActorGrantsLocked();
         if (actor == address(0)) revert CapabilityErrors.ActorZero();
-        if (actor.code.length == 0 && !_allowUndeployedSystemActor(capability)) {
+        if (!Delegation7702.hasContractCode(actor) && !_allowUndeployedSystemActor(capability)) {
             revert CapabilityErrors.ActorContractRequired();
         }
         bytes32 scope = _capabilityActorScope(capability, actor, true);
@@ -157,8 +159,10 @@ contract RegistryCapabilitiesFacet is FacetGuard {
     }
 
     /// @notice Check if an account currently holds a capability (direct actor or group membership).
+    /// @dev This is the answer other contracts (Interact, factories) rely on, so it applies the EIP-7702
+    ///      actor rule: an EOA delegated to an unapproved delegate holds no capability.
     function hasCapability(bytes32 capability, address actor) external view returns (bool) {
-        return CapabilitiesLib.hasCapability(actor, capability);
+        return DelegationGuard.isActorUsable(actor) && CapabilitiesLib.hasCapability(actor, capability);
     }
 
     /// @notice Permanently remove `owner()` as an implicit timelock governor.

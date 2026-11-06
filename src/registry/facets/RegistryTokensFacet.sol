@@ -260,7 +260,7 @@ contract RegistryTokensFacet is FacetGuard, PriceModule {
             if (expectedDecimals != 0) revert TokenFeedInvalid();
             return;
         }
-        if (feed.code.length == 0 || expectedDecimals > 36) {
+        if (feed.code.length <= 23 || expectedDecimals > 36) { // 23 = EIP-7702 designator length
             revert TokenFeedInvalid();
         }
         uint8 decimals = AggregatorV3Interface(feed).decimals();

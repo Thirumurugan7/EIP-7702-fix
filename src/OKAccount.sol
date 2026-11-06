@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {IMiniScript} from "@chainwall/interfaces/IMiniScript.sol";
 
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -78,9 +79,9 @@ contract OKAccount is Initializable, ChainwallUUPSUpgradeable {
         if (interact == address(0)) revert InteractZero();
         if (registry == address(0)) revert RegistryZero();
         if (engine == address(0)) revert EngineZero();
-        if (interact.code.length == 0) revert InteractNotContract(interact);
-        if (registry.code.length == 0) revert RegistryNotContract(registry);
-        if (engine.code.length == 0) revert EngineNotContract(engine);
+        if (!Delegation7702.hasContractCode(interact)) revert InteractNotContract(interact);
+        if (!Delegation7702.hasContractCode(registry)) revert RegistryNotContract(registry);
+        if (!Delegation7702.hasContractCode(engine)) revert EngineNotContract(engine);
         if (!ProtocolCodehashes.isAcceptedMiniScriptDeployment(engine)) {
             revert EngineNotCanonical(engine);
         }
@@ -129,7 +130,7 @@ contract OKAccount is Initializable, ChainwallUUPSUpgradeable {
     function setChainwallEngine(address newEngine) external {
         if (msg.sender != REGISTRY) revert OnlyRegistryUpgrade();
         if (newEngine == address(0)) revert EngineZero();
-        if (newEngine.code.length == 0) revert EngineNotContract(newEngine);
+        if (!Delegation7702.hasContractCode(newEngine)) revert EngineNotContract(newEngine);
         if (!ProtocolCodehashes.isAcceptedMiniScriptDeployment(newEngine)) {
             revert EngineNotCanonical(newEngine);
         }

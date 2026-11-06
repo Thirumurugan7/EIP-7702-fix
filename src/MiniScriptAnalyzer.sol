@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {MiniScriptBytecode} from "./MiniScriptBytecode.sol";
 import {MiniScriptLimits} from "./MiniScriptLimits.sol";
 import {ERCToken} from "./RegistryTypes.sol";
@@ -116,7 +117,7 @@ contract MiniScriptAnalyzer {
         (bool ok, bytes memory result) = host.staticcall(abi.encodeCall(IAnalyzerHostConfig.miniScriptHostConfig, ()));
         if (!ok || result.length != 64) return (false, address(0), address(0));
         (configuredEngine, registryAddr) = abi.decode(result, (address, address));
-        valid = registryAddr != address(0) && registryAddr.code.length != 0;
+        valid = registryAddr != address(0) && Delegation7702.hasContractCode(registryAddr);
     }
 
     /// @notice Hash the exact public catalog state reachable by one interaction.
@@ -442,7 +443,7 @@ contract MiniScriptAnalyzer {
 
     /// @dev Require a deployed feed whose live decimals match the Registry-bound value.
     function _requireFeedDecimals(address feed, uint8 expectedDecimals) private view {
-        if (feed == address(0) || feed.code.length == 0 || expectedDecimals > 36) {
+        if (feed == address(0) || !Delegation7702.hasContractCode(feed) || expectedDecimals > 36) {
             // A dependency hash must bind every reachable reference; invalid bounds or feed metadata must fail
             // closed.
             // forge-lint: disable-next-line(require-revert-in-loop)

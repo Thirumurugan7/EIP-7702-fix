@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import {ExecutionCatalogStorage} from "../RegistryShared.sol";
@@ -33,7 +34,7 @@ contract RegistryTermsFacet is FacetGuard, IRegistryTerms {
     function initializeTermsContext() external whenNotPausedD nonReentrantD onlyRoleD(ADMIN_ROLE) {
         TermsStorage.Layout storage l = TermsStorage.getLayout();
         if (l.factory != address(0)) revert TermsContextAlreadyInitialized(l.factory);
-        if (msg.sender != _ownerD() || msg.sender.code.length == 0) revert TermsFactoryInvalid(msg.sender);
+        if (msg.sender != _ownerD() || !Delegation7702.hasContractCode(msg.sender)) revert TermsFactoryInvalid(msg.sender);
         TermsDocument memory document = IFactoryTerms(msg.sender).getTerms();
         TermsDocumentLib.validate(document.ipfsUri, document.documentHash);
         l.factory = msg.sender;

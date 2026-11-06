@@ -4,6 +4,7 @@ pragma solidity ^0.8.36;
 
 import {ERC1967Proxy} from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {OKFactoryConfig} from "./OKFactoryConfig.sol";
 import {OKFactoryErrors} from "./OKFactoryErrors.sol";
 import {OKFactoryModuleBase} from "./OKFactoryModuleBase.sol";
@@ -92,6 +93,8 @@ contract OKFactoryStage1Module is OKFactoryModuleBase {
         returns (address registry, uint256 index)
     {
         if (instanceOwner == address(0)) revert OKFactoryErrors.OwnerZero();
+        address ownerDelegate = Delegation7702.delegateOf(instanceOwner);
+        if (ownerDelegate != address(0)) revert OKFactoryErrors.OwnerDelegated(instanceOwner, ownerDelegate);
 
         index = nextInstanceId;
         unchecked {

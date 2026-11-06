@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {IMiniScript} from "@chainwall/interfaces/IMiniScript.sol";
 
 import {MiniScriptEngine} from "./MiniScriptEngine.sol";
@@ -53,7 +54,7 @@ contract TimelockPolicyProgramRunner {
 
     function _requireCanonicalEngine(address engine_) private view {
         if (engine_ == address(0)) revert EngineZero();
-        if (engine_.code.length == 0) revert EngineNotContract(engine_);
+        if (!Delegation7702.hasContractCode(engine_)) revert EngineNotContract(engine_);
         if (!ProtocolCodehashes.isAcceptedMiniScriptDeployment(engine_)) {
             revert EngineNotCanonical(engine_);
         }

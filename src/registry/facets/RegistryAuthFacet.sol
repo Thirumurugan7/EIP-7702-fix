@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {AuthCredentialLink} from "../../RegistryTypes.sol";
 import {CapabilitiesLib, CapabilityIds} from "../../registry/Capabilities.sol";
 import {AuthLinksStorage} from "../../registry/RegistryShared.sol";
@@ -75,7 +76,7 @@ contract RegistryAuthFacet is FacetGuard {
     function setAuthAccountFactory(address factory, bool allowed) external whenNotPausedD nonReentrantD {
         _requireAdminRole();
         if (factory == address(0)) revert AuthAccountFactoryZero();
-        if (allowed && factory.code.length == 0) revert AuthAccountFactoryNotDeployed(factory);
+        if (allowed && !Delegation7702.hasContractCode(factory)) revert AuthAccountFactoryNotDeployed(factory);
         if (allowed) _requireFactoryRegistry(factory);
         (bool executing,) = TimelockLib.enforceOrQueue(
             TimelockRequest({
@@ -220,7 +221,7 @@ contract RegistryAuthFacet is FacetGuard {
     function _validateLinkInput(bytes32 idKey, address account, bytes32 credHash) private view {
         if (idKey == bytes32(0)) revert AuthIdKeyZero();
         if (account == address(0)) revert AuthAccountZero();
-        if (account.code.length == 0) revert AuthAccountNotDeployed(account);
+        if (!Delegation7702.hasContractCode(account)) revert AuthAccountNotDeployed(account);
         if (credHash == bytes32(0)) revert AuthCredHashZero();
         _requireAuthAccountFromAllowedFactory(account, credHash);
     }

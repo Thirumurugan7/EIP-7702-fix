@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 /// @title ProtocolCodehashes
 /// @notice Accepted runtime codehashes for canonical protocol-managed deployment components.
 /// @dev Recompute and verify runtime code hashes under both the default and production profiles whenever
@@ -19,19 +20,19 @@ library ProtocolCodehashes {
 
     /// @dev Canonical OKFactoryStage1Module codehash for the default Foundry profile.
     bytes32 internal constant CANONICAL_STAGE1_MODULE_CODEHASH_DEFAULT =
-        0x4c801afc0655451fb76c0b0f7e87fd76b2506c73715b69201c480e00133fcdf9;
+        0x0fb5ef621a6c0dd8ed5c3c22894a29c6185c0e28300bd86d0cd86dbb721e80b9;
 
     /// @dev Canonical OKFactoryStage1Module codehash for the production Foundry profile.
     bytes32 internal constant CANONICAL_STAGE1_MODULE_CODEHASH_PRODUCTION =
-        0x79c5939b508b4a481a49b047eb97aa099d7ddd64717f299d0f6a3e4a72c1c63f;
+        0x813cc2ce8cbbe8748deb2641fc1cada51d49642bad8155e8fcf2ef8f75776a02;
 
     /// @dev Canonical OKFactoryStage2Module codehash for the default Foundry profile.
     bytes32 internal constant CANONICAL_STAGE2_MODULE_CODEHASH_DEFAULT =
-        0x60310a24f25162c40cdf338c92883dcaf7905e6335028669b3706156b21fd75c;
+        0x24e921a4c2cce5f4aacc223bf9e7feae720e2de7917ddb6f389674bb42f44cc4;
 
     /// @dev Canonical OKFactoryStage2Module codehash for the production Foundry profile.
     bytes32 internal constant CANONICAL_STAGE2_MODULE_CODEHASH_PRODUCTION =
-        0x8dd1034f3aff95619cd9c76792e1b5f96654f2d7d12b96661b39dc05d6c81f74;
+        0x0be23f70c634bbc33a5ce2a2ac1ca4d02c6faac15c97eeaafb00a5a8468158fa;
 
     /// @dev Canonical OKFactoryAuthAccountModule codehash for the default Foundry profile.
     bytes32 internal constant CANONICAL_AUTH_ACCOUNT_MODULE_CODEHASH_DEFAULT =
@@ -43,51 +44,51 @@ library ProtocolCodehashes {
 
     /// @dev Canonical MiniScriptEngine codehash for the default Foundry profile.
     bytes32 internal constant MINISCRIPT_ENGINE_CODEHASH_DEFAULT =
-        0xd173247f3b8db6028f80a381680675c484963ae6bf29f28ed9939040472a08c6;
+        0x97358a102b8bcc7611eb5a7a31a8af9d641531fdee5a1a27049eaff221ef79ab;
 
     /// @dev Canonical MiniScriptEngine codehash for the production Foundry profile.
     bytes32 internal constant MINISCRIPT_ENGINE_CODEHASH_PRODUCTION =
-        0x4cc7f3f5df109bb2210cb63cd0865f43fd00671f8e01e139785f9ee9139235f6;
+        0x32509141c992b8a9c7c95fd3f4417de35a6ea5ee89475c92bbe7fcf068e59068;
 
     /// @dev Canonical MiniScriptAnalyzer codehash for the default Foundry profile.
     bytes32 internal constant MINISCRIPT_ANALYZER_CODEHASH_DEFAULT =
-        0x2e4bfacf6b17f01090760a54cb9130a08f7d50a6924051c2ba16572176cca8d9;
+        0x2deb68be2bacc946601a71318e690fb5327e32ec64e3130b342aedf14329b1c8;
 
     /// @dev Canonical MiniScriptAnalyzer codehash for the production Foundry profile.
     bytes32 internal constant MINISCRIPT_ANALYZER_CODEHASH_PRODUCTION =
-        0xc45b74704e9eb2d587d936c9899f3e0a7932e2d079af03ad0aeb13a4b7f2cba4;
+        0x3c991e499001b150003ab11fed8d7446f008119865533881f557cbe0ba72dc88;
 
     /// @dev Canonical MiniScriptABIEncoder codehash for the default Foundry profile.
     bytes32 internal constant MINISCRIPT_ABI_ENCODER_CODEHASH_DEFAULT =
-        0x3136565577e30e8ea04447a8ac066d0399837687a5436a61f49285b1c5fe00f1;
+        0x881e6d8dd37d9928c009c5e373548b34ac0e275da21a2a0a2659413c707ea187;
 
     /// @dev Canonical MiniScriptABIEncoder codehash for the production Foundry profile.
     bytes32 internal constant MINISCRIPT_ABI_ENCODER_CODEHASH_PRODUCTION =
-        0xfdee783e333775ee2c19dfb54e581aca9a5d5702898f0f41beb05ac9550647ad;
+        0x1625b7b5b6681c2449c13abd246212a8b1923640c193e9b621730f7825ebe091;
 
     /// @dev Canonical InteractOpsModule codehash for the default Foundry profile.
     bytes32 internal constant INTERACT_OPS_MODULE_CODEHASH_DEFAULT =
-        0x403d09910edcb7ab57039c4fd03ea98346ed2f38b1ed4b7424e3798338b83b7d;
+        0x679ee52a85f17c413ba586826a70d3374ce2fac175947bb258909e357198f8ec;
 
     /// @dev Canonical InteractOpsModule codehash for the production Foundry profile.
     bytes32 internal constant INTERACT_OPS_MODULE_CODEHASH_PRODUCTION =
-        0x9263c853e12f32c964ea69bb1263eae71dc92a59fc907105090b8afed5b506b0;
+        0xf173e1cd95f7a6d35cd67d75b77f9dc928a927356414f7c9cf488334d5c73f7b;
 
     /// @dev Canonical RegistryPauseModule codehash for the default Foundry profile.
     bytes32 internal constant REGISTRY_PAUSE_MODULE_CODEHASH_DEFAULT =
-        0x215df7a4f077922707f8c270b0923c5dac612cbc43eb5685ae6c9de5aa84622f;
+        0x53c9ff8f8098163c9a71ee9f2fd5f648d2bc1202a6d4420ab4be20fea7841077;
 
     /// @dev Canonical RegistryPauseModule codehash for the production Foundry profile.
     bytes32 internal constant REGISTRY_PAUSE_MODULE_CODEHASH_PRODUCTION =
-        0x03053d70ff86f26df2bdf9fe57aadc50a5ea48ff7cb2aaec4aaffe71434a2911;
+        0x7be20abae2ee8f3bf0bbdaa6a313b0180caffc480ff41a5b9ab623b25bdd58ba;
 
     /// @dev Canonical RegistryTimelockExecutionModule codehash for the default Foundry profile.
     bytes32 internal constant REGISTRY_TIMELOCK_EXECUTION_MODULE_CODEHASH_DEFAULT =
-        0xa0adc82a7537d1b89ad1ec02e564e1abf61d369f341b112add59f23341b439c9;
+        0x5f3341f4082f6e7f495e100552b700099200ded34a1e43dc5a4527a1c0b900a1;
 
     /// @dev Canonical RegistryTimelockExecutionModule codehash for the production Foundry profile.
     bytes32 internal constant REGISTRY_TIMELOCK_EXECUTION_MODULE_CODEHASH_PRODUCTION =
-        0x12311128cf2ece2a59c38de84b73d6ff27d2c7e9621b8756a98d92c8b5ed9243;
+        0x112ab9d83673d9dce48d8a5f998178f25d1e6529f87c142c4fce3669f551919b;
 
     /// @dev Canonical TimelockPolicyProgramRunner codehash for the default Foundry profile.
     bytes32 internal constant TIMELOCK_POLICY_RUNNER_CODEHASH_DEFAULT =
@@ -176,7 +177,7 @@ library ProtocolCodehashes {
     ///      deterministic child runtimes. The latter keeps older same-release
     ///      deployments compatible without trusting only the parent runtime.
     function isCompatibleMiniScriptDeployment(address left, address right) internal view returns (bool) {
-        if (left.code.length == 0 || right.code.length == 0) return false;
+        if (!Delegation7702.hasContractCode(left) || !Delegation7702.hasContractCode(right)) return false;
         if (left == right) return true;
         if (isAcceptedMiniScriptDeployment(left) && isAcceptedMiniScriptDeployment(right)) return true;
 
@@ -184,9 +185,9 @@ library ProtocolCodehashes {
         address rightAnalyzer = _miniScriptChild(right, 1);
         address leftEncoder = _miniScriptChild(left, 2);
         address rightEncoder = _miniScriptChild(right, 2);
-        return left.codehash == right.codehash && leftAnalyzer.code.length != 0 && rightAnalyzer.code.length != 0
-            && leftAnalyzer.codehash == rightAnalyzer.codehash && leftEncoder.code.length != 0
-            && rightEncoder.code.length != 0 && leftEncoder.codehash == rightEncoder.codehash;
+        return left.codehash == right.codehash && Delegation7702.hasContractCode(leftAnalyzer) && Delegation7702.hasContractCode(rightAnalyzer)
+            && leftAnalyzer.codehash == rightAnalyzer.codehash && Delegation7702.hasContractCode(leftEncoder)
+            && Delegation7702.hasContractCode(rightEncoder) && leftEncoder.codehash == rightEncoder.codehash;
     }
 
     function isAcceptedTimelockPolicyRunnerCodehash(bytes32 codeHash) internal pure returns (bool) {

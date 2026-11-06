@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {OKFactoryAddressDerivation} from "./OKFactoryAddressDerivation.sol";
 import {OKFactoryConfig} from "./OKFactoryConfig.sol";
 import {OKFactoryDeploymentKey} from "./OKFactoryDeploymentKey.sol";
@@ -129,7 +130,7 @@ contract OKFactory is OKFactoryState {
             revert TermsRegistryInitialTermsMismatch(address(termsRegistry), expectedTerms.documentHash);
         }
         if (address(config) == address(0)) revert ConfigZero();
-        if (address(config).code.length == 0) revert ConfigNotContract(address(config));
+        if (!Delegation7702.hasContractCode(address(config))) revert ConfigNotContract(address(config));
         address predictor = _configPredictor(config);
         bytes32 predictorCodehash = predictor.codehash;
         if (!ProtocolCodehashes.isAcceptedPredictorCodehash(predictorCodehash)) {

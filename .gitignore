@@ -5,3 +5,7 @@
 broadcast/
 cache/
 out/
+out-orig/
+cache-orig/
+test.log
+local/run/

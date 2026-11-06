@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {CapabilitiesLib, CapabilityIds} from "../../registry/Capabilities.sol";
 import {IAccessControl} from "@openzeppelin/contracts/access/IAccessControl.sol";
 
@@ -365,7 +366,7 @@ contract RegistryTimelockExecutionModule is FacetGuard {
     /// @dev Configuration and execution both authenticate the canonical runner and its
     ///      complete current or explicitly supported predecessor engine deployment.
     function _validateTimelockPolicyRunner(address runner) private view {
-        if (runner.code.length == 0 || !ProtocolCodehashes.isAcceptedTimelockPolicyRunnerCodehash(runner.codehash)) {
+        if (!Delegation7702.hasContractCode(runner) || !ProtocolCodehashes.isAcceptedTimelockPolicyRunnerCodehash(runner.codehash)) {
             // Execution failures must roll back committed effects; batch skipping is limited to unavailable actions
             // before execution.
             // forge-lint: disable-next-line(require-revert-in-loop)

@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 /// @title WebAuthnEntryPoint
 /// @notice Canonical ERC-4337 deployment supported by Chainwall AuthAccounts.
 library WebAuthnEntryPoint {
@@ -56,7 +57,7 @@ library WebAuthnEntryPoint {
     function requireCanonical(address entryPoint) internal view {
         requireAddress(entryPoint);
         bytes32 expected = expectedCodehash(block.chainid);
-        if (entryPoint.code.length == 0) revert EntryPointNotDeployed(entryPoint);
+        if (!Delegation7702.hasContractCode(entryPoint)) revert EntryPointNotDeployed(entryPoint);
         bytes32 actualCodehash = entryPoint.codehash;
         if (actualCodehash != expected) {
             revert EntryPointCodehashMismatch(entryPoint, expected, actualCodehash);

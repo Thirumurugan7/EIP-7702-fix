@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {TimelockLib, TimelockRequest} from "../../registry/TimelockLib.sol";
 import {RegistryTransitionGuard} from "../RegistryTransitionGuard.sol";
 import {DiamondAdminStorage} from "../diamond/DiamondAdminStorage.sol";
@@ -224,7 +225,7 @@ contract DiamondCutFacet is IDiamondCut, FacetGuard {
                 // A diamond cut is atomic; every selector transition must be valid and every routing update must
                 // succeed.
                 // forge-lint: disable-next-line(require-revert-in-loop)
-                if (cut.facetAddress.code.length == 0) revert FacetHasNoCode(cut.facetAddress);
+                if (!Delegation7702.hasContractCode(cut.facetAddress)) revert FacetHasNoCode(cut.facetAddress);
             }
 
             for (uint256 j = 0; j < cut.functionSelectors.length;) {

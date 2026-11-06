@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
@@ -205,7 +206,7 @@ contract AccountFactory is Initializable, ReentrancyGuardUpgradeable, ChainwallU
 
     function _requireCanonicalEngine(address engine_) private view {
         if (engine_ == address(0)) revert EngineZero();
-        if (engine_.code.length == 0) revert EngineNotContract(engine_);
+        if (!Delegation7702.hasContractCode(engine_)) revert EngineNotContract(engine_);
         if (!ProtocolCodehashes.isAcceptedMiniScriptDeployment(engine_)) {
             revert EngineNotCanonical(engine_);
         }

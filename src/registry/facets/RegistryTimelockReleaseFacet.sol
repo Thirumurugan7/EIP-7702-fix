@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {IProxy} from "@gnosis.pm/safe-contracts/proxies/SafeProxy.sol";
 import {SafeProxyFactory} from "@gnosis.pm/safe-contracts/proxies/SafeProxyFactory.sol";
 
@@ -569,7 +570,7 @@ contract RegistryTimelockReleaseFacet is RegistryUpgradeFacetBase {
     }
 
     function _readComponentId(address target) private view returns (bytes32 componentId) {
-        if (target.code.length == 0) revert ReleaseTargetInvalid(target);
+        if (!Delegation7702.hasContractCode(target)) revert ReleaseTargetInvalid(target);
         try IChainwallUpgradeable(target).chainwallComponentId() returns (bytes32 value) {
             componentId = value;
         } catch {
@@ -587,7 +588,7 @@ contract RegistryTimelockReleaseFacet is RegistryUpgradeFacetBase {
     }
 
     function _requireCode(address target) private view returns (bytes32 codehash_) {
-        if (target.code.length == 0) revert ReleaseTargetInvalid(target);
+        if (!Delegation7702.hasContractCode(target)) revert ReleaseTargetInvalid(target);
         codehash_ = target.codehash;
     }
 

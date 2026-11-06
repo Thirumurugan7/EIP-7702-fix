@@ -5,7 +5,9 @@ pragma solidity ^0.8.36;
 import {EntityFlags} from "../../EntityFlags.sol";
 import {PagedIndex} from "../../PagedIndex.sol";
 import {ContractAddress, ContractRecord, DappContract} from "../../RegistryTypes.sol";
+import {Delegation7702} from "../../Delegation7702.sol";
 import {CapabilitiesLib, CapabilityIds} from "../../registry/Capabilities.sol";
+import {DelegationGuard} from "../../registry/DelegationGuard.sol";
 import {KeccakHelpers as KH} from "../../registry/Hashing.sol";
 import {
     Authority,
@@ -55,6 +57,8 @@ contract RegistryContractsFacet is FacetGuard {
     error CommitDeadlineInvalid();
     error ContractMissing();
     error ContractAddressZero();
+    /// @notice The address (or its implementation) is an EOA carrying an EIP-7702 delegation.
+    error ContractAddressDelegated(address addr);
     error InvalidContractFlags();
 
     event ContractUpsert(string indexed orgId, string indexed id, address indexed operator);
@@ -515,6 +519,12 @@ contract RegistryContractsFacet is FacetGuard {
         bool updateFlags
     ) private {
         if (addrData.addr == address(0)) revert ContractAddressZero();
+        // A directory entry names a contract. An EOA carrying an EIP-7702 delegation is not one: its key
+        // holder can replace the code behind it with one signature, outside every Registry timelock.
+        if (Delegation7702.isDelegated(addrData.addr)) revert ContractAddressDelegated(addrData.addr);
+        if (Delegation7702.isDelegated(addrData.implementation)) {
+            revert ContractAddressDelegated(addrData.implementation);
+        }
         address actor = _msgSenderD();
         ContractsStorage.Layout storage cl = ContractsStorage.getLayout();
         uint32 next = ContractsStorage.addVersion(cl, key, addrData, label);
@@ -588,6 +598,8 @@ contract RegistryContractsFacet is FacetGuard {
                 ethHash := keccak256(add(prefix, 0x20), mload(prefix))
             }
         }
+        // A delegated committer's ERC-1271 answer comes from its delegate's code, not from its key.
+        DelegationGuard.requireActorUsable(committer);
         if (!SignatureChecker.isValidSignatureNow(committer, ethHash, actorSignature)) {
             revert RevealSignatureInvalid();
         }

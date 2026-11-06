@@ -390,6 +390,15 @@
   },
   {
     "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0x49145975",
+    "signature": "allowDelegate(address)"
+  },
+  {
+    "contracts": [
       "RegistryTimelockFacet"
     ],
     "mutability": "nonpayable",
@@ -599,6 +608,15 @@
     "contracts": [
       "RegistryUsersFacet"
     ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8d22ea2a",
+    "signature": "delegateOf(address)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
     "mutability": "nonpayable",
     "policy": "blocked",
     "selector": "0xe57097c9",
@@ -630,6 +648,15 @@
     "policy": "blocked",
     "selector": "0x1f931c1c",
     "signature": "diamondCut((address,uint8,bytes4[])[],address,bytes)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "nonpayable",
+    "policy": "blocked",
+    "selector": "0xccc1ea83",
+    "signature": "disallowDelegate(address)"
   },
   {
     "contracts": [
@@ -1008,6 +1035,24 @@
     "policy": "read",
     "selector": "0xfa7428de",
     "signature": "getAddressesByHash(bytes32[])"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xb0d7c57d",
+    "signature": "getAllowedDelegateAt(uint256)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xba466586",
+    "signature": "getAllowedDelegateCount()"
   },
   {
     "contracts": [
@@ -2640,12 +2685,30 @@
   },
   {
     "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x813d2582",
+    "signature": "isActorUsable(address)"
+  },
+  {
+    "contracts": [
       "RegistryAuthFacet"
     ],
     "mutability": "view",
     "policy": "read",
     "selector": "0x35ac9e28",
     "signature": "isAuthAccountFactoryAllowed(address)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0xc8725959",
+    "signature": "isDelegateAllowed(address)"
   },
   {
     "contracts": [
@@ -2934,6 +2997,15 @@
     "policy": "blocked",
     "selector": "0x4828b286",
     "signature": "replaceSafeSingletonMigrator(address,address)"
+  },
+  {
+    "contracts": [
+      "RegistryUsersFacet"
+    ],
+    "mutability": "view",
+    "policy": "read",
+    "selector": "0x8044a2d5",
+    "signature": "requireActorUsable(address)"
   },
   {
     "contracts": [

@@ -2,11 +2,13 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {EntityFlags} from "../../EntityFlags.sol";
 import {PagedIndex} from "../../PagedIndex.sol";
 import {AggregatorV3Interface} from "../../PriceModule.sol";
 import {ERCToken} from "../../RegistryTypes.sol";
 import {CapabilitiesLib, CapabilityIds} from "../../registry/Capabilities.sol";
+import {DelegationGuard} from "../../registry/DelegationGuard.sol";
 import {KeccakHelpers as KH} from "../../registry/Hashing.sol";
 import {
     Authority,
@@ -276,7 +278,8 @@ contract RegistryTokenCommitsFacet is FacetGuard {
             if (expectedDecimals != 0) revert TokenFeedInvalid();
             return;
         }
-        if (feed.code.length == 0 || expectedDecimals > 36) revert TokenFeedInvalid();
+        // 23 = EIP-7702 designator length: a delegated EOA is not a price feed.
+        if (feed.code.length <= 23 || expectedDecimals > 36) revert TokenFeedInvalid();
         uint8 actual = AggregatorV3Interface(feed).decimals();
         if (actual > 36 || actual != expectedDecimals) revert TokenFeedInvalid();
     }
@@ -317,6 +320,8 @@ contract RegistryTokenCommitsFacet is FacetGuard {
             )
         );
         bytes32 ethHash = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", structHash));
+        // A delegated committer's ERC-1271 answer comes from its delegate's code, not from its key.
+        DelegationGuard.requireActorUsable(committer);
         if (!SignatureChecker.isValidSignatureNow(committer, ethHash, actorSignature)) {
             revert RevealSignatureInvalid();
         }

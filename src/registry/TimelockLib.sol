@@ -6,6 +6,7 @@ import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import {PagedIndex} from "../PagedIndex.sol";
 import {GroupCriteria, Policy} from "../RegistryTypes.sol";
+import {DelegationGuard} from "./DelegationGuard.sol";
 import {GovernanceData} from "./GovernanceData.sol";
 import {PendingActionList} from "./PendingActionList.sol";
 import {
@@ -107,9 +108,14 @@ library ExecutionContextLib {
     }
 
     /// @notice Resolves the actor for a Registry self-replay, otherwise returns the real caller.
-    function actorOrSender() internal view returns (address) {
+    /// @dev Every caller-based authority decision in the Registry resolves its actor here, so this is
+    ///      where the EIP-7702 rule is enforced: an EOA delegated to an unapproved delegate cannot act,
+    ///      directly or as the stored actor of a timelock replay. A delegated EOA's calls are made by
+    ///      its delegate's code, which is not the key holder the Registry authorized.
+    function actorOrSender() internal view returns (address actor) {
         Layout storage l = state();
-        return l.active && msg.sender == address(this) ? l.actor : msg.sender;
+        actor = l.active && msg.sender == address(this) ? l.actor : msg.sender;
+        DelegationGuard.requireActorUsable(actor);
     }
 
     /// @notice Returns the action id currently bound to the execution context.
@@ -273,7 +279,7 @@ library TimelockApprovalsStorage {
         uint256 i = 0;
         while (i < approvers.length()) {
             address approver = approvers.at(i);
-            if (!GroupsStorage.isMember(groups, groupHash, approver)) {
+            if (!_isActiveMember(groups, groupHash, approver)) {
                 approvers.remove(approver);
             } else {
                 unchecked {
@@ -282,6 +288,16 @@ library TimelockApprovalsStorage {
             }
         }
         liveCount = approvers.length();
+    }
+
+    /// @dev A stored approval counts only while its approver is still a member and still usable under
+    ///      the EIP-7702 rule: an approver who delegates after approving stops counting.
+    function _isActiveMember(GroupsStorage.Layout storage groups, bytes32 groupHash, address approver)
+        private
+        view
+        returns (bool)
+    {
+        return GroupsStorage.isMember(groups, groupHash, approver) && DelegationGuard.isActorUsable(approver);
     }
 
     /// @dev Stop once `threshold` live approvals are found. This bounds the
@@ -295,7 +311,7 @@ library TimelockApprovalsStorage {
         EnumerableSet.AddressSet storage approvers = state().groupApprovers[actionId][groupHash];
         GroupsStorage.Layout storage groups = GroupsStorage.getLayout();
         for (uint256 i; i < approvers.length(); ++i) {
-            if (GroupsStorage.isMember(groups, groupHash, approvers.at(i))) {
+            if (_isActiveMember(groups, groupHash, approvers.at(i))) {
                 ++count;
                 if (count == threshold) return count;
             }
@@ -426,6 +442,11 @@ library TimelockLib {
     bytes32 internal constant CATEGORY_SYNC_CONTRACT = keccak256("timelock.category.sync.contract");
     /// @notice Category key for token imports from approved source registries.
     bytes32 internal constant CATEGORY_SYNC_TOKEN = keccak256("timelock.category.sync.token");
+    /// @notice Category key for approving or removing EIP-7702 delegates accepted behind actors.
+    /// @dev Deliberately NOT part of `isProtocolCategory`: it has no code-defined default. Until governance
+    ///      stores a configuration for it with `setCategoryConfig`, `allowDelegate` and `disallowDelegate`
+    ///      revert. Accepting delegates is opt-in, and the delay that guards it is an explicit decision.
+    bytes32 internal constant CATEGORY_DELEGATE = keccak256("timelock.category.delegate");
 
     uint64 internal constant DEFAULT_MAX_DELAY = 30 days;
     uint64 internal constant DEFAULT_GRACE_PERIOD = 30 days;
@@ -536,6 +557,10 @@ library TimelockLib {
 
     function categorySyncToken() internal pure returns (bytes32) {
         return CATEGORY_SYNC_TOKEN;
+    }
+
+    function categoryDelegate() internal pure returns (bytes32) {
+        return CATEGORY_DELEGATE;
     }
 
     /// @notice Return whether `category` is part of the protocol-defined surface.
@@ -1239,7 +1264,10 @@ library TimelockLib {
         bool recorded = false;
         for (uint256 i = 0; i < policy.criteria.length; ++i) {
             GroupCriteria storage crit = policy.criteria[i];
-            if (GroupsStorage.exists(gl, crit.groupHash) && GroupsStorage.isMember(gl, crit.groupHash, approver)) {
+            if (
+                GroupsStorage.exists(gl, crit.groupHash) && GroupsStorage.isMember(gl, crit.groupHash, approver)
+                    && DelegationGuard.isActorUsable(approver)
+            ) {
                 eligible = true;
                 // Once a group meets its current threshold, additional members
                 // cannot inflate its enumerable approval set while another
@@ -1351,7 +1379,7 @@ library TimelockLib {
         if (approver == address(0)) return out;
 
         out.approverIsMember = GroupsStorage.exists(groups, criterion.groupHash)
-            && GroupsStorage.isMember(groups, criterion.groupHash, approver);
+            && GroupsStorage.isMember(groups, criterion.groupHash, approver) && DelegationGuard.isActorUsable(approver);
         out.approverHasApproved = TimelockApprovalsStorage.hasGroupApproval(actionId, criterion.groupHash, approver);
         out.approverCanContribute = out.approverIsMember && !out.approverHasApproved && !out.satisfied;
     }

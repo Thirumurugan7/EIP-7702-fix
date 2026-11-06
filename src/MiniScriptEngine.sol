@@ -739,10 +739,25 @@ contract MiniScriptEngine {
 
             // Resolve only literals collected by the structural prepass. This
             // keeps execution targets aligned with dependency analysis.
+            // A target must be a contract with code of its own. An EIP-7702 designator
+            // (exactly 23 bytes, 0xef0100 || delegate) marks an EOA: it still has a private
+            // key, and one signed authorization replaces the code its calls run. The
+            // scratch word is restored so callers' memory assumptions are unchanged.
+            function hasOwnCode(a) -> own {
+                let codeSize := extcodesize(a)
+                own := iszero(iszero(codeSize))
+                if eq(codeSize, 23) {
+                    let savedWord := mload(0x00)
+                    extcodecopy(a, 0x00, 0, 3)
+                    if eq(shr(232, mload(0x00)), 0xef0100) { own := 0 }
+                    mstore(0x00, savedWord)
+                }
+            }
+
             function resolveTarget(h, pHashes, pAddrs, pOk, pN) -> target {
                 let a, allowed, hit := preLookup(h, pHashes, pAddrs, pOk, pN)
                 if iszero(and(hit, allowed)) { failWord(ERR_02) }
-                if iszero(extcodesize(a)) { failWord(ERR_02) }
+                if iszero(hasOwnCode(a)) { failWord(ERR_02) }
                 target := a
             }
 

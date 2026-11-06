@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {IChainwallUpgradeable} from "../../ChainwallUpgradeable.sol";
 import {
     ExecutionContextLib,
@@ -370,8 +371,8 @@ contract RegistryTimelockUpgradeFacet is RegistryUpgradeFacetBase {
         view
         returns (ComponentUpgrade memory upgrade)
     {
-        if (target.code.length == 0) revert UpgradeTargetInvalid(target);
-        if (newImplementation.code.length == 0) revert UpgradeImplementationInvalid(newImplementation);
+        if (!Delegation7702.hasContractCode(target)) revert UpgradeTargetInvalid(target);
+        if (!Delegation7702.hasContractCode(newImplementation)) revert UpgradeImplementationInvalid(newImplementation);
         _requireComponent(target, componentId);
         _requireComponent(newImplementation, componentId);
         address current = _readCurrentImplementation(target);
@@ -420,7 +421,7 @@ contract RegistryTimelockUpgradeFacet is RegistryUpgradeFacetBase {
         } catch {
             revert UpgradeIntrospectionFailed(target);
         }
-        if (implementation.code.length == 0) revert UpgradeImplementationInvalid(implementation);
+        if (!Delegation7702.hasContractCode(implementation)) revert UpgradeImplementationInvalid(implementation);
     }
 
     function _requireCurrentImplementation(address target, address expected, bytes32 expectedCodehash) private view {
@@ -437,7 +438,7 @@ contract RegistryTimelockUpgradeFacet is RegistryUpgradeFacetBase {
     }
 
     function _requireCodehash(address target, bytes32 expected) private view {
-        if (target.code.length == 0) revert UpgradeImplementationInvalid(target);
+        if (!Delegation7702.hasContractCode(target)) revert UpgradeImplementationInvalid(target);
         bytes32 actual = target.codehash;
         if (actual != expected) revert UpgradeCodehashChanged(target, expected, actual);
     }

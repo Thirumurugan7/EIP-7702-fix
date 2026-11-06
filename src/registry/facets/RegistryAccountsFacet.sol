@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {PagedIndex} from "../../PagedIndex.sol";
 import {ProtocolCodehashes} from "../../ProtocolCodehashes.sol";
 import {CapabilitiesLib, CapabilityIds} from "../../registry/Capabilities.sol";
@@ -124,7 +125,7 @@ contract RegistryAccountsFacet is FacetGuard {
     /// @param safe Safe proxy address to allowlist.
     function addSafe(address safe) external whenNotPausedD nonReentrantD {
         _requireSafeWriteRole();
-        if (safe == address(0) || safe.code.length == 0) revert SafeInvalid();
+        if (safe == address(0) || !Delegation7702.hasContractCode(safe)) revert SafeInvalid();
         bytes32 scope = _safeScope(safe, true);
         SafeAddrsStorage.Layout storage sl = SafeAddrsStorage.getLayout();
         if (SafeAddrsStorage.contains(sl, safe)) revert SafeExists();
@@ -177,7 +178,7 @@ contract RegistryAccountsFacet is FacetGuard {
 
     /// @notice Checks if a Safe is allowlisted and has deployed code.
     function isSafeAllowed(address safe) external view returns (bool) {
-        if (safe == address(0) || safe.code.length == 0) {
+        if (safe == address(0) || !Delegation7702.hasContractCode(safe)) {
             return false;
         }
         SafeAddrsStorage.Layout storage sl = SafeAddrsStorage.getLayout();
@@ -188,7 +189,7 @@ contract RegistryAccountsFacet is FacetGuard {
     /// @dev MiniScriptEngine uses this stronger check before executing in Safe storage. It prevents another
     ///      enabled module from impersonating the tenant Interact contract even if it exposes matching getters.
     function isSafeExecutionAuthorityAllowed(address safe, address authority) external view returns (bool) {
-        if (safe == address(0) || authority == address(0) || safe.code.length == 0) return false;
+        if (safe == address(0) || authority == address(0) || !Delegation7702.hasContractCode(safe)) return false;
         if (!SafeAddrsStorage.contains(SafeAddrsStorage.getLayout(), safe)) return false;
 
         address[] memory factories = CapabilitiesLib.capabilityActors(CapabilityIds.ACCOUNT_MANAGER);
@@ -262,7 +263,7 @@ contract RegistryAccountsFacet is FacetGuard {
     /// @param account Account address to allowlist.
     function addAccount(address account) external whenNotPausedD nonReentrantD {
         _requireAccountWriteRole();
-        if (account == address(0) || account.code.length == 0) revert AccountInvalid();
+        if (account == address(0) || !Delegation7702.hasContractCode(account)) revert AccountInvalid();
         bytes32 scope = _accountScope(account, true);
         AccountAddrsStorage.Layout storage al = AccountAddrsStorage.getLayout();
         if (AccountAddrsStorage.contains(al, account)) revert AccountExists();
@@ -315,7 +316,7 @@ contract RegistryAccountsFacet is FacetGuard {
 
     /// @notice Checks if an Account is allowlisted and has deployed code.
     function isAccountAllowed(address account) external view returns (bool) {
-        if (account == address(0) || account.code.length == 0) {
+        if (account == address(0) || !Delegation7702.hasContractCode(account)) {
             return false;
         }
         AccountAddrsStorage.Layout storage al = AccountAddrsStorage.getLayout();
@@ -435,7 +436,7 @@ contract RegistryAccountsFacet is FacetGuard {
         view
         returns (AccountFactoryCheck memory result)
     {
-        if (factory.code.length == 0) return result;
+        if (!Delegation7702.hasContractCode(factory)) return result;
         (bool ok, bool managed) =
             _readBool(factory, abi.encodeWithSelector(IManagedAccountFactory.isAccount.selector, account));
         if (!ok || !managed) return result;
@@ -466,7 +467,7 @@ contract RegistryAccountsFacet is FacetGuard {
         // The factory engine is only the default for future accounts. Existing
         // accounts adopt engines independently through Registry governance, so
         // provenance must not depend on which side was upgraded first.
-        if (actualEngine.code.length == 0 || !ProtocolCodehashes.isAcceptedMiniScriptDeployment(actualEngine)) {
+        if (!Delegation7702.hasContractCode(actualEngine) || !ProtocolCodehashes.isAcceptedMiniScriptDeployment(actualEngine)) {
             return AccountFactoryCheck({
                 valid: false, failure: AccountFailureKind.EngineCode, expected: address(0), actual: actualEngine
             });
@@ -497,7 +498,7 @@ contract RegistryAccountsFacet is FacetGuard {
     }
 
     function _checkSafeFactory(address factory, address safe) private view returns (SafeFactoryCheck memory result) {
-        if (factory.code.length == 0) return result;
+        if (!Delegation7702.hasContractCode(factory)) return result;
         (bool ok, bool managed) = _readBool(factory, abi.encodeWithSelector(IManagedSafeFactory.isSafe.selector, safe));
         if (!ok || !managed) return result;
 
@@ -645,7 +646,7 @@ contract RegistryAccountsFacet is FacetGuard {
     }
 
     function _validateSafeExtensions(address module, address safe) private view returns (bool ok) {
-        if (module.code.length == 0) return false;
+        if (!Delegation7702.hasContractCode(module)) return false;
         bytes memory callData =
             abi.encodeWithSelector(IManagedSafeModuleValidator.validateSafeExtensions.selector, safe);
         uint256 gasLimit = MODULE_VALIDATION_GAS;

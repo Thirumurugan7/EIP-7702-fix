@@ -26,4 +26,7 @@ interface IAccessRegistry {
     function isGroupMemberByHash(bytes32 groupHash, address user) external view returns (bool);
     /// @notice Return whether `actor` currently holds `capability`.
     function hasCapability(bytes32 capability, address actor) external view returns (bool);
+    /// @notice Return whether `actor` may hold or exercise authority: false only for an EOA that
+    ///         carries an EIP-7702 delegation to a delegate this Registry has not approved.
+    function isActorUsable(address actor) external view returns (bool);
 }

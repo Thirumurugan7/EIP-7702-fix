@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {DiamondLoupeStorage} from "../diamond/DiamondLoupeStorage.sol";
 import {DiamondSelectors} from "../diamond/DiamondSelectors.sol";
 import {EnumerableSet} from "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
@@ -102,7 +103,7 @@ contract DiamondLoupeFacet is IDiamondLoupe, IDiamondLoupeExtended {
 
     /// @notice Returns the VERSION() value exposed by a facet.
     function facetVersion(address facet) public view returns (uint256 version) {
-        if (facet.code.length == 0) revert("FacetVersion:no code");
+        if (!Delegation7702.hasContractCode(facet)) revert("FacetVersion:no code");
         (bool available, uint256 value) = _tryFacetVersion(facet);
         if (!available) revert("FacetVersion:query failed");
         return value;
@@ -141,7 +142,7 @@ contract DiamondLoupeFacet is IDiamondLoupe, IDiamondLoupeExtended {
     }
 
     function _tryFacetVersion(address facet) private view returns (bool available, uint256 version) {
-        if (facet.code.length == 0) return (false, 0);
+        if (!Delegation7702.hasContractCode(facet)) return (false, 0);
         // VERSION is queried through STATICCALL; unavailable versions return an explicit false result without
         // changing state.
         // forge-lint: disable-next-line(calls-loop)

@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {BaseTransactionGuard, ITransactionGuard} from "@gnosis.pm/safe-contracts/base/GuardManager.sol";
 import {Enum} from "@gnosis.pm/safe-contracts/libraries/Enum.sol";
 
@@ -106,7 +107,7 @@ contract OKGuard is ITransactionGuard, BaseTransactionGuard, ChainwallUUPSUpgrad
 
     function _requireSafeSingletonMigrator(Interact interact_, SafeSingletonMigrator migrator_) private view {
         address migrator = address(migrator_);
-        if (migrator.code.length == 0) revert GuardSafeSingletonMigratorInvalid(migrator);
+        if (!Delegation7702.hasContractCode(migrator)) revert GuardSafeSingletonMigratorInvalid(migrator);
         try migrator_.chainwallComponentId() returns (bytes32 componentId) {
             if (componentId != SAFE_SINGLETON_MIGRATOR_COMPONENT_ID) {
                 revert GuardSafeSingletonMigratorInvalid(migrator);

@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "../../Delegation7702.sol";
 import {SafeCast} from "@openzeppelin/contracts/utils/math/SafeCast.sol";
 
 import {InteractionFlags} from "../../InteractionFlags.sol";
@@ -135,7 +136,7 @@ contract RegistryInteractionSyncFacet is FacetGuard {
     /// @dev Require a deployed source currently present in the Registry sync allowlist.
     function _requireAllowedSource(address sourceRegistry) private view {
         if (sourceRegistry == address(0)) revert SourceRegistryZero();
-        if (sourceRegistry.code.length == 0) revert SourceRegistryNotContract();
+        if (!Delegation7702.hasContractCode(sourceRegistry)) revert SourceRegistryNotContract();
         if (!SyncStorage.getLayout().isSyncSourceAllowed[sourceRegistry]) {
             revert SourceRegistryNotAllowed(sourceRegistry);
         }

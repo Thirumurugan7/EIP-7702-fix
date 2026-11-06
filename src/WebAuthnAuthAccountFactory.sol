@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {IEntryPointStake} from "@openzeppelin/contracts/interfaces/draft-IERC4337.sol";
 import {Clones} from "@openzeppelin/contracts/proxy/Clones.sol";
@@ -119,7 +120,7 @@ contract WebAuthnAuthAccountFactory is Initializable, ChainwallUUPSUpgradeable {
         WebAuthnEntryPoint.requireCanonical(entryPoint_);
         if (implementation_ == address(0)) revert ImplementationZero();
         if (registry_ == interact_) revert RegistryInteractSame();
-        if (registry_.code.length == 0) revert RegistryNotContract(registry_);
+        if (!Delegation7702.hasContractCode(registry_)) revert RegistryNotContract(registry_);
         bytes32 implementationCodehash = _requireAuthAccountImplementation(implementation_);
         if (rpIdHash_ == bytes32(0)) revert RpIdHashZero();
         if (bytes(origin_).length == 0) revert OriginEmpty();
@@ -613,7 +614,7 @@ contract WebAuthnAuthAccountFactory is Initializable, ChainwallUUPSUpgradeable {
     }
 
     function _requireAuthAccountImplementation(address implementation) private view returns (bytes32 codehash_) {
-        if (implementation.code.length == 0) revert ImplementationNotContract(implementation);
+        if (!Delegation7702.hasContractCode(implementation)) revert ImplementationNotContract(implementation);
         bytes32 componentId = bytes32(0);
         try WebAuthnAuthAccount(payable(implementation)).chainwallComponentId() returns (bytes32 value) {
             componentId = value;

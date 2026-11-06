@@ -10,6 +10,9 @@ bytecode_hash = "none"
 extra_output = ["storageLayout"]
 # Pinned upstream libraries are maintained separately; retain diagnostics for our sources.
 ignored_warnings_from = ["lib"]
+# Test only: the migration test deploys the unpatched release from a second artifact directory
+# (see test/tools/build-original.sh). This grants forge read access to it and changes no bytecode.
+fs_permissions = [{ access = "read", path = "./out-orig" }]
 
 [profile.production]
 optimizer = true

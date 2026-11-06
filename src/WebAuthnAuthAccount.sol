@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol";
 import {ERC4337Utils} from "@openzeppelin/contracts/account/utils/draft-ERC4337Utils.sol";
@@ -350,8 +351,8 @@ contract WebAuthnAuthAccount is Initializable, ReentrancyGuardUpgradeable, IERC1
         if (entryPoint_ == address(0)) revert EntryPointZero();
         WebAuthnEntryPoint.requireAddress(entryPoint_);
         if (registry_ == interact_) revert RegistryInteractSame();
-        if (registry_.code.length == 0) revert RegistryNotContract(registry_);
-        if (interact_.code.length == 0) revert InteractNotContract(interact_);
+        if (!Delegation7702.hasContractCode(registry_)) revert RegistryNotContract(registry_);
+        if (!Delegation7702.hasContractCode(interact_)) revert InteractNotContract(interact_);
         if (rpIdHash_ == bytes32(0)) revert RpIdHashZero();
         if (bytes(origin_).length == 0) revert OriginEmpty();
         if (!requireUserVerification_) revert UserVerificationRequired();
@@ -1195,7 +1196,7 @@ contract WebAuthnAuthAccount is Initializable, ReentrancyGuardUpgradeable, IERC1
 
     function _validateStoredFactory() private view returns (IWebAuthnAuthAccountFactoryProtocol factoryContract) {
         address factory_ = factory();
-        if (factory_ == address(0) || factory_.code.length == 0) revert ProtocolFactoryInvalid(factory_);
+        if (factory_ == address(0) || !Delegation7702.hasContractCode(factory_)) revert ProtocolFactoryInvalid(factory_);
         factoryContract = IWebAuthnAuthAccountFactoryProtocol(factory_);
 
         address registry_ = registry();
@@ -1220,7 +1221,7 @@ contract WebAuthnAuthAccount is Initializable, ReentrancyGuardUpgradeable, IERC1
     function _resolveSafeModule() private view returns (address module) {
         IWebAuthnAuthAccountFactoryProtocol factoryContract = _validateStoredFactory();
         address safeFactory = factoryContract.SAFE_FACTORY();
-        if (safeFactory.code.length == 0) {
+        if (!Delegation7702.hasContractCode(safeFactory)) {
             revert ProtocolFactoryInvalid(factory());
         }
 
@@ -1228,7 +1229,7 @@ contract WebAuthnAuthAccount is Initializable, ReentrancyGuardUpgradeable, IERC1
         IWebAuthnAuthAccountSafeFactory safeFactoryContract = IWebAuthnAuthAccountSafeFactory(safeFactory);
         if (safeFactoryContract.INTERACT_CONTRACT() != interact_) revert ProtocolFactoryInvalid(factory());
         module = safeFactoryContract.MODULE_CONTRACT();
-        if (module.code.length == 0 || IWebAuthnAuthAccountSafeModule(module).INTERACTION() != interact_) {
+        if (!Delegation7702.hasContractCode(module) || IWebAuthnAuthAccountSafeModule(module).INTERACTION() != interact_) {
             revert UserOperationModuleInvalid(module);
         }
     }

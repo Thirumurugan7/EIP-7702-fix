@@ -11,6 +11,9 @@ library OKFactoryErrors {
     error ConfigZero();
     /// @notice Thrown when a new instance is requested with a zero owner.
     error OwnerZero();
+    /// @notice Thrown when the requested owner is an EOA carrying an EIP-7702 delegation.
+    /// @dev A new tenant has no approved delegates, so its first admin must be a plain EOA or a contract.
+    error OwnerDelegated(address owner, address delegate);
     /// @notice Thrown when stage 2 is requested for a registry that is not currently staged.
     error NotPending();
     /// @notice Thrown when stage-1 finalize is requested for a registry that has not been bootstrapped.

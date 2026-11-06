@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {IChainwallUpgradeable} from "@chainwall/interfaces/IChainwallUpgradeable.sol";
 
 import {UUPSUpgradeable} from "@openzeppelin/contracts-upgradeable/proxy/utils/UUPSUpgradeable.sol";
@@ -46,7 +47,7 @@ library ChainwallInitialImplementationValidation {
         view
         returns (Issue issue, bytes32 codehash_)
     {
-        if (implementation.code.length == 0) return (Issue.NotContract, bytes32(0));
+        if (!Delegation7702.hasContractCode(implementation)) return (Issue.NotContract, bytes32(0));
 
         try IChainwallUpgradeable(implementation).chainwallComponentId() returns (bytes32 componentId) {
             if (componentId != expectedComponentId) return (Issue.Component, bytes32(0));

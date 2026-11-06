@@ -1,0 +1,1 @@
+{$require(($subjectNativeValue == 0)), $require(($subjectArgCount == 2)), $require(($arg0 != 0)), $require(($arg1 > 0)), $require($write(0xbad6ccbe8f6bed92553dd18910f79c66afaaa5d196515ba83f48c7fe256ee89a, 0xa9059cbb, {$arg0, $arg1}))}

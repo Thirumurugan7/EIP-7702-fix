@@ -2,6 +2,7 @@
 // Copyright: OKcontract Pte. Ltd.
 pragma solidity ^0.8.36;
 
+import {Delegation7702} from "./Delegation7702.sol";
 import {ERC1967Proxy} from "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol";
 
 import {AccountFactory} from "./AccountFactory.sol";
@@ -65,7 +66,7 @@ contract OKFactoryStage2Module is OKFactoryModuleBase {
         if (flags & _INSTANCE_FLAG_AUTH_ACCOUNT_FACTORY != 0) {
             require(authAccountFactory != address(0), "auth factory missing");
             deployed.authAccountFactory = authAccountFactory;
-            require(deployed.authAccountFactory.code.length != 0, "auth factory missing");
+            require(Delegation7702.hasContractCode(deployed.authAccountFactory), "auth factory missing");
         }
         RegistryDiamond tenantRegistry = RegistryDiamond(registryAddr);
         // The wrapper consumed the pending deployment and checked its immutable
